@@ -1,0 +1,60 @@
+﻿.chartheadingpanel
+{
+    background: #f3f1f2;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.chartpanel
+{
+    border: 1px solid #ececec;
+    border-radius: 3px;
+}
+.linechartyasix
+{
+    font-size: 11pt;
+    font-weight: bold;
+    -ms-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    margin-top: 26%;
+    position: absolute;
+    margin-left: -10%;
+}
+.linechartyasix2
+{
+    font-size: 11pt;
+    font-weight: bold;
+    -ms-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+    margin-top: 14%;
+    position: absolute;
+    margin-left: -5%;
+}
+
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
+{
+    .linechartyasix
+    {
+        font-size: 9pt;
+        -ms-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        margin-top: 26%;
+        position: absolute;
+        margin-left: -11%;
+    }
+    .linechartyasix2
+    {
+        font-size: 9pt;
+        -ms-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        margin-top: 14%;
+        position: absolute;
+        margin-left: -5%;
+    }
+}

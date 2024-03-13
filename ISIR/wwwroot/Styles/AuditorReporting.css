@@ -1,0 +1,64 @@
+﻿#tblAuditorreporting tr td:not(:first-child)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align: left;
+}
+#tblAuditorreporting tr td:last-child
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.table-word-break td, .table-word-break th {
+    word-break: break-word !important;
+}
+
+#tblAuditorreporting th
+{
+    padding:2px;
+}
+
+#tblAuditorreporting tbody tr
+{
+    cursor: pointer;
+}
+
+#tblAuditorreporting tr td:nth-last-child(3), #tblAuditorreporting tr td:nth-last-child(4), #tblAuditorreporting tr td:nth-last-child(5), #tblAuditorreporting tr td:nth-last-child(6)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+#tblAuditorreporting tr td:nth-last-child(2)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    cursor: default;
+}
+
+
+/*#tblAuditorreporting tbody tr td :first-child
+{
+    text-align: left;
+    word-break: break-all;
+}*/
+
+.filterdrop .dropdown-menu {
+    margin-left: -38px!important;
+    padding-left: 42px;
+}
+.filterdrop .dropdown-menu  ul {
+    
+    width: 10vw!important;
+}
+.table.dataTable
+{
+width:98%!important;
+}

@@ -1,0 +1,57 @@
+﻿/*#tblAuditeereporting tbody tr td:first-child  {
+    text-align: left;
+    word-break: break-all;
+}*/
+
+.table-word-break td, .table-word-break th {
+    word-break: break-word !important;
+}
+#tblAuditeereporting tr td:not(:first-child) 
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align:left;
+}
+    #tblAuditeereporting tr td:last-child 
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align:center;
+}
+#tblAuditeereporting th
+{
+    padding:2px;
+}
+#tblAuditeereporting tr td:nth-last-child(3), #tblAuditeereporting tr td:nth-last-child(4), #tblAuditeereporting tr td:nth-last-child(5), #tblAuditeereporting tr td:nth-last-child(6)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+#tblAuditeereporting tr td:nth-last-child(2)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    cursor: default;
+}
+#tblAuditeereporting tbody tr
+{
+    cursor: pointer;
+}
+.filterdrop .dropdown-menu {
+    margin-left: -38px!important;
+    padding-left: 42px;
+}
+.filterdrop .dropdown-menu  ul {
+    
+    width: 10vw!important;
+}
+.table.dataTable
+{
+width:98%!important;
+}

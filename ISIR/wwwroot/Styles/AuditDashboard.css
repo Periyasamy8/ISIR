@@ -1,0 +1,44 @@
+﻿#tblAuditTracker tbody tr td:first-child  {
+    text-align: left;
+    word-break: break-word;
+}
+#tblAuditTracker tr td:not(:first-child) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*    white-space: nowrap;
+*/ text-align: left;
+    
+}
+
+#tblAuditTracker tr td:nth-last-child(1),#tblAuditTracker tr td:nth-last-child(2),#tblAuditTracker tr td:nth-last-child(3), #tblAuditTracker tr td:nth-last-child(4), #tblAuditTracker tr td:nth-last-child(5), #tblAuditTracker tr td:nth-last-child(6)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+#tblAuditTracker th
+{
+    padding:2px!important;
+}
+
+#tblAuditTracker tbody tr
+{
+    cursor: pointer;
+}
+.bootstrap-select.btn-group .dropdown-menu {
+   margin-left: -77px!important;
+    padding-left: 65px;
+    
+}
+
+.bootstrap-select .dropdown-menu ul {
+    width: 180px!important;
+}
+.table.dataTable
+{
+width:98%!important;
+}
+.table-word-break td, .table-word-break th {
+    word-break: break-word !important;
+}

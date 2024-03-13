@@ -1,0 +1,141 @@
+﻿body {
+}
+/*table.auditorListTable{
+    width:80%;
+    margin:0 10%;
+    }
+
+ table.auditorListTable tr th:last-child {
+        width:7%;     
+     }
+table.auditorListTable {
+     min-height:200px;
+     }
+     
+     
+     .bootstrap-select.btn-group .dropdown-menu{
+         margin-left:0;
+         
+         }
+
+
+table#tblLeadauditor tr th:last-child, table#tblLeadauditor tr td:last-child{
+        width:6% !important;
+    }
+table#tblLeadauditor tr th:nth-child(6), table#tblLeadauditor tr td:nth-child(6),
+table#tblLeadauditor tr th:nth-child(5), table#tblLeadauditor tr td:nth-child(5){
+    width:8% !important;
+    }
+table#tblLeadauditor tr th:nth-child(4), table#tblLeadauditor tr td:nth-child(4){
+    width:20% !important;
+    }*/
+
+
+table.auditorListTable {
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+
+
+
+table.auditorListTable {
+    min-height: 200px;
+}
+
+
+
+
+
+.bootstrap-select.btn-group .dropdown-menu {
+    margin-left: 0;
+}
+
+
+
+
+
+table.auditorListTable tr th:last-child {
+}
+
+table.auditorListTable tr th:first-child {
+    width: 11%;
+}
+
+td a {
+    text-decoration: underline !important;
+}
+
+
+
+table.newAuditorListData tr th:first-child {
+    width: 14%;
+}
+
+
+
+.btn {
+    cursor: pointer;
+}
+
+table tr th, table tr td {
+    word-break: break-word;
+}
+
+
+
+.fa, .fas {
+    margin: 0 7px;
+    cursor: pointer !important;
+}
+
+
+
+
+
+/*.table-word-break td, .table-word-break th
+{
+    word-break: break-all !important;
+}*/
+
+.crossed hr {
+    transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -moz-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    -o-transform: rotate(-25deg);
+    border: 1px solid #ccc !important;
+}
+
+
+
+
+
+.crossed {
+    padding: 0 !important;
+}
+
+
+
+.areaAuditedDetails {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.newLineAudited {
+    color: #391313;
+}
+
+
+
+.auditorListTable tr td:first-child {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+.name-area-auditor, .mailId-area-auditor {
+    font-weight: bold;
+}

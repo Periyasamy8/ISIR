@@ -1,49 +1,211 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 <head>
+    <style>
+      
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ISIR</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ISIR.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - ProcessAudit</title>
+
+
+    <link href="~/content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <link href="~/content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/content/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/content/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/content/bootstrap.css" rel="stylesheet" />
+    <link href="~/content/fa-brands.css" rel="stylesheet" />
+    <link href="~/content/fa-regular.css" rel="stylesheet" />
+    <link href="~/content/fa-solid.css" rel="stylesheet" />
+    <link href="~/content/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/content/fontawesome.css" rel="stylesheet" />
+    <link href="~/content/jquery.datatables.css" rel="stylesheet" />
+    <link href="~/content/jquery.mcustomscrollbar.css" rel="stylesheet" />
+    <link href="~/content/multiple-select.css" rel="stylesheet" />
+    <link href="~/content/responsivetable.css" rel="stylesheet" />
+    <link href="~/content/select2.css" rel="stylesheet" />
+    <link href="~/content/site.css" rel="stylesheet" />
+    <link href="~/content/theme.css" rel="stylesheet" />
+    <link href="~/content/validationengine.jquery.css" rel="stylesheet" />
+
+
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/scripts/jquery-2.2.0.js"></script>
+    <script src="~/scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/scripts/bootstrap-multiselect.js"></script>
+    <script src="~/scripts/bootstrap-select.js"></script>
+    <script src="~/scripts/bootstrap.js"></script>
+    <script src="~/scripts/dataaccesslayer.js"></script>
+    <script src="~/scripts/handlebars.js"></script>
+    <script src="~/scripts/html5shiv.js"></script>
+
+    <script src="~/scripts/jquery.datatables.js"></script>
+    <script src="~/scripts/jquery.mcustomscrollbar.js"></script>
+    <script src="~/scripts/jquery.mousewheel.min.js"></script>
+    <script src="~/scripts/jquery.translate.js"></script>
+
+    <script src="~/scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/scripts/jquery.validate.js"></script>
+    <script src="~/scripts/jquery.validate.min.js"></script>
+
+    <script src="~/scripts/jquery.validationengine-en.js"></script>
+    <script src="~/scripts/jquery.validationengine.js"></script>
+    <script src="~/scripts/jszip.min.js"></script>
+    <script src="~/scripts/modernizr.js"></script>
+    <script src="~/scripts/moment-with-locales.js"></script>
+    <script src="~/scripts/multiple-select.js"></script>
+    <script src="~/scripts/pptxgen.bundle.js"></script>
+    <script src="~/scripts/pptxgen.min.js"></script>
+    <script src="~/scripts/rgraph.bar.js"></script>
+    <script src="~/scripts/rgraph.common.core.js"></script>
+    <script src="~/scripts/rgraph.common.dynamic.js"></script>
+    <script src="~/scripts/rgraph.common.key.js"></script>
+    <script src="~/scripts/rgraph.common.tooltips.js"></script>
+    <script src="~/scripts/rgraph.line.js"></script>
+    <script src="~/scripts/rgraph.waterfall.js"></script>
+    <script src="~/scripts/select2.js"></script>
+    <script src="~/scripts/theme.js"></script>
+    <script src="~/scripts/underscore.js"></script>
+    <script src="~/scripts/validation.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+
+
+    <script type="text/javascript">
+        function LoaderShow() { $('#dLoader').css('display', ''); } function LoaderHide() { setTimeout(function () { $('#dLoader').css('display', 'none'); }, 200); }
+
+
+
+    </script>
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body id="lBody">
+ 
+        
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ISIR</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#Audittoolnavbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Menu</span> <span class="icon-bar"></span><span class="icon-bar">
+                        </span><span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="~/Images/DTALOGO.png" class="logimg" alt="logo" />
+                    </a>
+                </div>
+                <div id="Audittoolnavbar" class="navbar-collapse collapse">
+                    <div class="navcontainer col-lg-12">
+                        
+                        <div class="nav navbar-nav  pull-right" style="color: #000000;">
+                            <span class="glyphicon glyphicon-user" style="margin-right: 5px;"></span><span class="UserNmae"
+                                                                                                           id="">(@Accessor.HttpContext.Session.GetString("UserName"))</span>
+                        </div>
+                        <div class="nav navbar-nav  pull-right">
+                            <a href="@Url.Action("ChangePassword", "Home")"><span class="fas fa-lock" style="margin-right: 5px;"></span><span class="trn">Change Password</span></a>
+                        </div>
+                        <div class="nav navbar-nav pull-right">
+                            <a href="@Url.Action("LogOut", "Home")">
+                                <span class="glyphicon glyphicon-log-out"
+                                      style="margin-right: 5px; color: #000000;"></span><span class="trn">Log out</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="AuditTool">
+                        <p>
+                            <span class="trn">DTA QM ISIR Portal</span>
+                        </p>
+                    </div>
+
+
+
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
+        </nav>
+        <div class="subnavbar col-lg-12">
+            <div class="row  subnavbar-inner">
+                <div class="containernav" style="margin-right: 3vw;">
+                    <ul class="mainnav pull-right">
+                        <li class="">
+                            <a href="@Url.Action("HomePage", "Home")">
+                                <i class="fas fa-home"></i><span class="trn">Home</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="" id="AuditTrackerMenu">
+                            <a href="@Url.Action("RequestTracker", "Home")">
+                            <i class="fas fa-tachometer-alt"></i><span class="trn">Request Tracker</span>
+                            </a>
                         </li>
+                        <li class="" id="AuditscheduleMenu">
+                            <a href="@Url.Action("CreateRequest", "Home")">
+                            <i class="fas fa-list"></i><span class="trn">Create Request</span>
+                            </a>
+                        </li>
+                     
                     </ul>
                 </div>
+                <!-- /container -->
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <!-- /subnavbar-inner style="right: 0; left: auto;"-->
+        </div>
+
+        <div style="display: none;" id="dLoader">
+            <div id="basic_preloader_overlay">
+            </div>
+            <div class="basic_lbLoading">
+                <div class="cssload-rect1">
+                </div>
+                <div class="cssload-rect2">
+                </div>
+                <div class="cssload-rect3">
+                </div>
+            </div>
+        </div>
+
+
+
+        @RenderBody()
+
+ 
+        <!-- Alert  Modal -->
+        <!--$('#AlertModal').modal('show');
+        $('#AlertTitle').text('Alert !..');-->
+        <div class="modal fade" id="AlertModal" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-xs">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <span class="trn">Confirmation</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="AlertTitle">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="AlertOk" type="button" class="btn btn-success btn-xs btn-cancel btn-center"
+                                data-dismiss="modal">
+                            <span class="trn">OK</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - ISIR - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+   
 </body>
 </html>

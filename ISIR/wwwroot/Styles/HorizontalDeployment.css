@@ -1,0 +1,191 @@
+﻿/*#tblHorizontal tbody tr td:first-child
+{
+    text-align: left;
+    word-break: break-all;
+}*/
+.table-word-break td, .table-word-break th {
+    word-break: break-word !important;
+}
+
+
+#tblHorizontal tr td:not(:first-child)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align: left;
+}
+#tblHorizontal tr td:nth-last-child(2)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align: center;
+    cursor: default;
+}
+#tblHorizontal tr td:nth-last-child(3)
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align: center;
+    
+}
+#tblHorizontal th
+{
+    padding: 2px;
+}
+
+#tblHorizontal tbody tr
+{
+    cursor: pointer;
+}
+.dyncapa
+{
+    margin-left: -5px;
+}
+.dynAttachmentfilescapa
+{
+    margin-left: -5px;
+    margin-top: 5px;
+}
+.filterdrop .dropdown-menu {
+    margin-left: -89px!important;
+    padding-left: 85px;
+}
+.filterdrop .dropdown-menu  ul {
+    
+    width: 13vw!important;
+}
+.table.dataTable
+{
+width:98%!important;
+}
+/*Start material design radio button css*/
+@-webkit-keyframes ripple {
+   0% {
+      box-shadow: 0px 0px 0px 1px transparent;
+   }
+   50% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+   }
+   100% {
+      box-shadow: 0px 0px 0px 15px transparent;
+   }
+}
+
+@-moz-keyframes ripple {
+   0% {
+      box-shadow: 0px 0px 0px 1px transparent;
+   }
+   50% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+   }
+   100% {
+      box-shadow: 0px 0px 0px 15px transparent;
+   }
+}
+
+@-o-keyframes ripple {
+   0% {
+      box-shadow: 0px 0px 0px 1px transparent;
+   }
+   50% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+   }
+   100% {
+      box-shadow: 0px 0px 0px 15px transparent;
+   }
+}
+
+@keyframes ripple {
+   0% {
+      box-shadow: 0px 0px 0px 1px transparent;
+   }
+   50% {
+      box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+   }
+   100% {
+      box-shadow: 0px 0px 0px 15px transparent;
+   }
+}
+
+.md-radio {
+   margin: 0px 0;
+}
+
+.md-radio.md-radio-inline {
+   display: inline-block;
+}
+
+.md-radio input[type="radio"] {
+   display: none;
+}
+
+.md-radio input[type="radio"]:checked + label:before {
+   border-color: #337ab7;
+   -webkit-animation: ripple 0.2s linear forwards;
+      -moz-animation: ripple 0.2s linear forwards;
+        -o-animation: ripple 0.2s linear forwards;
+           animation: ripple 0.2s linear forwards;
+}
+
+.md-radio input[type="radio"]:checked + label:after {
+   -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+        -o-transform: scale(1);
+           transform: scale(1);
+}
+
+.md-radio label {
+   display: inline-block;
+   height: 20px;
+   position: relative;
+   padding: 0 30px;
+   margin-bottom: 0;
+   cursor: pointer;
+   vertical-align: bottom;
+}
+
+.md-radio label:before, .md-radio label:after {
+   position: absolute;
+   content: '';
+   border-radius: 50%;
+   -webkit-transition: all .3s ease;
+   -o-transition: all .3s ease;
+   -moz-transition: all .3s ease;
+   transition: all .3s ease;
+   -webkit-transition-property: border-color, -webkit-transform;
+   transition-property: border-color, -webkit-transform;
+   -o-transition-property: border-color, -o-transform;
+   -moz-transition-property: transform, border-color, -moz-transform;
+   transition-property: transform, border-color;
+   transition-property: transform, border-color, -webkit-transform, -moz-transform, -o-transform;
+}
+
+.md-radio label:before {
+   left: 0;
+   top: 0;
+   width: 20px;
+   height: 20px;
+   border: 2px solid rgba(0, 0, 0, 0.54);
+}
+
+.md-radio label:after {
+   top: 5px;
+   left: 5px;
+   width: 10px;
+   height: 10px;
+   -webkit-transform: scale(0);
+      -moz-transform: scale(0);
+        -o-transform: scale(0);
+           transform: scale(0);
+   background: #337ab7;
+}
+
+*, *:before, *:after {
+   -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+/*END material design radio button css*/

@@ -1,0 +1,156 @@
+﻿  #tblViewAuditSchedule th
+{
+    padding:2px;
+}
+
+
+
+
+
+#tblViewAuditSchedule tr td:not(:first-child) 
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    white-space: nowrap;
+*/    text-align:left;
+}
+    #tblViewAuditSchedule tr td:last-child
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align:center;
+}
+.filterdrop .dropdown-menu {
+    margin-left: -52px!important;
+    padding-left: 53px;
+}
+.filterdrop .dropdown-menu  ul {
+    
+    width: 10vw!important;
+}
+
+.table.dataTable
+{
+width:98%!important;
+}
+.table-word-break td, .table-word-break th {
+    word-break: break-word !important;
+}
+
+
+
+
+
+.input-search {
+    float: right;
+    padding: 4px 6px;
+    border-radius: 3px;
+    background: #00677F;
+    color: #fff;
+    cursor: pointer;
+}
+
+    .input-search i {
+        margin: 0 !important;
+    }
+
+.search-field {
+    float: left;
+    width: 93%;
+}
+
+
+
+@media (max-width:1440px) {
+
+    .search-field {
+        width: 89%;
+    }
+}
+
+
+
+
+
+table.auditorListTable {
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+
+
+table.auditorListTable {
+    min-height: 200px;
+}
+
+
+
+
+
+.bootstrap-select.btn-group .dropdown-menu {
+    margin-left: 0;
+}
+
+
+
+
+
+table.auditorListTable tr th:last-child {
+}
+
+table.auditorListTable tr th.filtertxt {
+    width: 11%;
+}
+
+td a {
+    text-decoration: underline !important;
+}
+
+
+
+table.newAuditorListData tr th:first-child {
+    width: 14%;
+}
+
+
+
+.btn {
+    cursor: pointer;
+}
+
+table tr th, table tr td {
+    word-break: break-word;
+}
+
+
+
+.fa, .fas {
+    margin: 0 7px;
+    cursor: pointer !important;
+}
+
+
+
+/*table td.crossed {
+    background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), #ccc, transparent calc(50% + 1px));
+}*/
+
+
+.crossed hr {
+    transform: rotate(-25deg);
+    -ms-transform: rotate(-25deg);
+    -moz-transform: rotate(-25deg);
+    -webkit-transform: rotate(-25deg);
+    -o-transform: rotate(-25deg);
+    border: 1px solid #ccc !important;
+}
+
+
+
+
+
+.crossed {
+    padding: 0 !important;
+}
