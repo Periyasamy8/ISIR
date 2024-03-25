@@ -1,0 +1,463 @@
+﻿@* @model DTAQMLAB.Models.CreateRequest *@
+@{
+    ViewBag.Title = "CreateRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        jQuery.each(jQuery('textarea[data-autoresize]'), function () {
+            var offset = this.offsetHeight - this.clientHeight;
+
+            var resizeTextarea = function (el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+            jQuery(this).on('keyup input', function () { resizeTextarea(this); }).removeAttr('data-autoresize');
+        });
+    });
+</script>
+
+<style>
+    .textarea {
+        box-sizing: border-box;
+        resize: none;
+    }
+    /*.text-control {
+            box-sizing: border-box;
+            resize: none !important;
+            overflow: hidden !important;
+        }*/
+    .bootstrap-tagsinput {
+        margin-top: 10px !important;
+        width: 100% !important;
+    }
+
+    .label-info {
+        font-size: 15px !important;
+    }
+</style>
+
+<script src="~/Plugins/CreateRequest.js?i=2"></script>
+<link href="~/Styles/RequestTracker.css" rel="stylesheet" />
+
+<link href="~/Content/bootstrap-tagsinput-typeahead.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-tagsinput.css" rel="stylesheet" />
+
+<script src="~/Scripts/bootstrap-tagsinput.min.js"></script>
+
+
+<div class="Table_contentpanel">
+    <div class="QMLabtitlebg " style="padding: 5px 10px; text-align: left; color: #000; ">
+        <h4 id="Strong1" style="font-size: 20px;">
+            <span class="trn" data-trn-key="Concern Tracker" data-trn-value="">Create New Request</span>
+        </h4>
+    </div>
+    @* <input type="text" id="LabRequestId" hidden="hidden" /> *@
+    @*<hr style="margin-top: 1px; margin-bottom: 1px;" />*@
+    <form id="CreateRequest" action="">
+        <div class="row QMLabPage">
+            <div class="col-md-12">
+                <div class="">
+                    <h5 class="sec-head">Request details</h5>
+                    <div class="col-md-6 bottomClass" style="">
+                        <label class="col-md-3">
+                            <span>Requester Name</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control validate[required]" id="txtRequestorName" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Department</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control validate[required]" id="txtDepartment" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Sub Department</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtSubDepartment" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Contact No</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control validate[required]" id="txtContactNo" maxlength="20" />
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both; padding-top: 5px;">
+                    <h5 class="sec-head">Lab details</h5>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Lab Name</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control validate[required]" id="ddlLabName"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Test Class</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control validate[required]" id="ddlTestClass" ></select>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both; padding-top: 5px;">
+                    <h5 class="sec-head" style="">Part Details</h5>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Receipt number</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtReceiptNo">                        
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Supplier code</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtSupplierCode"  />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Inspection grade</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlInspGrade">
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>In charge of QE</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlInchrQE" >
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Classification</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlClassification" >
+                            </select>
+                        </div>
+                    </div>                    
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Part number</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtpartnumber"  />
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Part name</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtpartname" />
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Content</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtcontent"  />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Judgement</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlJudgement">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Inspector</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlInspector">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Instruction No.</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtInstNo"  />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Inspection quantity</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtInspQuantity"  />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>EO No.</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtEONo" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Model</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlModel" >
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Acceptance date</span>
+                        </label>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="txtacceptdate" type="text" >
+                            <i class="far fa-calendar-alt calenderclass"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>
+                                Desired inspection completion date/deadline
+                            </span>
+                        </label>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="txtdeadlinedate" type="text">
+                            <i class="far fa-calendar-alt calenderclass"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>
+                                Expected completion date of
+                                inspection
+                            </span>
+                        </label>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="txtexptcomdate" type="text">
+                            <i class="far fa-calendar-alt calenderclass"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>
+                                Inspection completion date
+                            </span>
+                        </label>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="txtinscompldate" type="text">
+                            <i class="far fa-calendar-alt calenderclass"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass" style="clear:left;">
+                        <label class="col-md-3">
+                            <span>
+                                Inspection report submission date
+                            </span>
+                        </label>
+                        <div class="col-md-5">
+                            <input class="form-control input-sm" id="txtrptsubdate" type="text">
+                            <i class="far fa-calendar-alt calenderclass"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Number of inspection days</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtinspdays"  />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass" style="clear:left;">
+                        <label class="col-md-3">
+                            <span>Inspection man-hours</span>
+                        </label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="txtinsphrs" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 bottomClass">
+                        <label class="col-md-3">
+                            <span>Remarks</span>
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="ddlRemarks">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear: both; padding-top: 5px;">
+                    <h5 class="sec-head" style="">File Upload</h5>                  
+                    <div class="col-md-6 bottomclass" style="clear: both;" id="ShowAttachment">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="Upload">
+                                Attachments
+                            </label>
+                            <div class="col-md-9">
+                                <input type="hidden" id="hdnfilecount" />
+                                <input type="button" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                       title="Add Attachments" value="Browse..." onclick="document.getElementById('files1').click();" />
+                                <input type="file" id="files1" name="files[]" multiple style="display: none;" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 doctabledesign" id="DocTable">
+                    </div>
+
+                    <br />
+                    <!--Dynamic Alert  Modal -->
+                    <div class="modal fade" id="DynamicAlertModal" role="dialog">
+                        <div class="modal-dialog modal-xs">
+                            <div class="modal-content">
+                                <div class="modal-header modalheaderbg">
+                                    <h4 class="modal-title" id="hTitle3"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="">
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="dyOk" onclick="CreatedRequest()" type="button" class="btn btn-success btn-xs btn-cancel btn-center"
+                                            data-dismiss="modal">
+                                        OK
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--confirmation Delete Modal -->
+                    <div class="modal fade" id="deleteModal" role="dialog">
+                        <div class="modal-dialog modal-xs">
+                            <div class="modal-content">
+                                <div class="modal-header modalheaderbg">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title">
+                                        Delete
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Are you sure you want to Delete the file?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="pull-right btn btn-danger btn-xs rejectbtn btn-cancel btn-center"
+                                            data-dismiss="modal">
+                                        No
+                                    </button>
+                                    <button type="button" class="pull-right btn btn-success btn-xs btn-cancel btn-center"
+                                            data-dismiss="modal" onclick="DeleteFilesPopup();" style="margin-right: 10px;">
+                                        Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END confirmation Delete Modal -->
+                    <div class="col-md-12 bottomClass" style="clear: both">
+                        <button type="button" id="" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip"
+                                data-placement="top" title="" onclick="ClearData();" style="margin-right: 1%; padding: 5px"
+                                data-original-title="Clear All Entries">
+                            Clear
+                        </button>
+                        <button type="submit" id="btnsubmit" data-toggle="confirmation" class="pull-right btn btn-success btn-xs btn-cancel btn-center"
+                                style="padding: 5px;">
+                            Create request
+                        </button>
+                        @*<input type="submit" id="btnsubmit" data-toggle="confirmation" value="Create request" class="pull-right btn btn-success btn-xs btn-cancel btn-center"
+                        style="padding: 5px;"/>*@
+
+
+                        <button type="button" id="btnsaveasdraft" data-toggle="confirmation" onclick="CreateRequestSave();" class="pull-right btn btn-primary btn-xs btn-cancel btn-center"
+                                style="padding: 5px; margin-right: 10px;">
+                            Save as Draft
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    h4, h5 {
+        font-weight: bold;
+    }
+
+    .sec-head {
+        padding: 10px 15px;
+        background: #f2f2f2;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        font-size: 18px;
+    }
+</style>
+<script>
+   
+    // $(document).ready(function () {
+    //     //date time picker
+    //     $("#txtacceptdate").datetimepicker({
+    //         autoclose: true,
+    //         pickTime: false,
+    //         minView: 2,
+    //         format: "dd-mm-yyyy"
+            
+    //     });
+    //     $("#txtacceptdate").on('change', function () {
+    //         // var from = $('#txtacceptdate').val();
+    //         // var fromdate = from.split('-');
+    //         // var fromval = fromdate[2] + '-' + fromdate[1] + '-' + fromdate[0];
+
+    //         // console.log(fromdate);
+    //         console.log(getDateVal("#txtacceptdate"));
+    //     });
+        
+    // });
+
+    // function getDateVal(date) {
+    //     var from = $(date).val();
+    //     var fromdate = from.split('-');
+    //     var fromval = fromdate[2] + '-' + fromdate[1] + '-' + fromdate[0];
+    //     return fromval;
+    // }
+</script>

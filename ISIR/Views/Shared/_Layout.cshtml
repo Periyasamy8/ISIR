@@ -4,15 +4,20 @@
 @inject IHttpContextAccessor Accessor
 <head>
     <style>
-      
+        footer {
+            clear: both;
+            background-color: #e2e2e2;
+            font-size: .8em;
+            height: 100px;
+        }
     </style>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProcessAudit</title>
+    <title>@ViewData["Title"] - ISIR</title>
 
 
-    <link href="~/content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+@*     <link href="~/content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
     <link href="~/content/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href="~/content/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/content/bootstrap-responsive.min.css" rel="stylesheet" />
@@ -30,12 +35,33 @@
     <link href="~/content/select2.css" rel="stylesheet" />
     <link href="~/content/site.css" rel="stylesheet" />
     <link href="~/content/theme.css" rel="stylesheet" />
-    <link href="~/content/validationengine.jquery.css" rel="stylesheet" />
-
-
+    <link href="~/content/validationengine.jquery.css" rel="stylesheet" /> *@
+    
+    <link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="~/Content/fa-brands.css" rel="stylesheet" />
+    <link href="~/Content/fa-regular.css" rel="stylesheet" />
+    <link href="~/Content/fa-solid.css" rel="stylesheet" />
+    @* <link href="~/Content/site.css" rel="stylesheet" /> *@
+    <link href="~/Content/validationengine.jquery.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <link href="~/Content/jquery.dataTables.css" rel="stylesheet">
+    <link href="~/Content/responsivetable.css" rel="stylesheet">
+    <link href="~/Content/fontawesome.css" rel="stylesheet">
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet">
+    <link href="~/Content/theme.css" rel="stylesheet">
+    <link href="~/Content/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <link href="~/Content/multiple-select.css" rel="stylesheet">
+    <link href="~/Content/select2.css" rel="stylesheet">
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet">
    
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/scripts/jquery-2.2.0.js"></script>
+    <link href="~/content/alertify.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-3.7.1.js"></script>
+    @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+    @* <script src="~/scripts/jquery-2.2.0.js"></script> *@
     <script src="~/scripts/bootstrap-datetimepicker.js"></script>
     <script src="~/scripts/bootstrap-multiselect.js"></script>
     <script src="~/scripts/bootstrap-select.js"></script>
@@ -72,7 +98,7 @@
     <script src="~/scripts/theme.js"></script>
     <script src="~/scripts/underscore.js"></script>
     <script src="~/scripts/validation.js"></script>
-
+    <script src="~/scripts/alertify.js"></script>
 
     @RenderSection("Scripts", required: false)
 
@@ -140,7 +166,7 @@
                             </a>
                         </li>
                         <li class="" id="AuditTrackerMenu">
-                            <a href="@Url.Action("RequestTracker", "Home")">
+                            <a href="@Url.Action("LabTracker", "Home")">
                             <i class="fas fa-tachometer-alt"></i><span class="trn">Request Tracker</span>
                             </a>
                         </li>
@@ -172,7 +198,17 @@
 
 
 
-        @RenderBody()
+    <div class="main">
+        <div class="main-inner">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        @RenderBody()
+                    </div>
+                </div>             
+            </div>           
+        </div>  
+    </div>
 
  
         <!-- Alert  Modal -->

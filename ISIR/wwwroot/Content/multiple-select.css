@@ -18,7 +18,7 @@
     border: 1px solid transparent;
     text-align: left;
     white-space: nowrap;
-    line-height: 28px;
+    line-height: 26px;
     color: #444;
     text-decoration: none;
     -webkit-border-radius: 3px;
@@ -29,7 +29,7 @@
 .drepeat .ms-choice {
     display: block;
     width: 100%;
-    height: 26px;
+    height: 30px;
     padding: 0;
     overflow: hidden;
     cursor: pointer;
@@ -51,8 +51,8 @@
     
     }
 .drepeat .ms-drop {
-    width: auto;
-    margin-left: -5%;
+    width: 100%;
+    margin-left: 0%;
     overflow: hidden;
     display: none;
     margin-top: 2px;
@@ -100,15 +100,15 @@
     right: 3px;
     width: 25px;
     height: 25px;
-    background: url('../Images/multiple-select.png') left top no-repeat;
+    background: url('../images/multiple-select.png') left top no-repeat;
 }
 
 .ms-choice > div.open {
-    background: url('../Images/multiple-select.png') right top no-repeat;
+    background: url('../images/multiple-select.png') right top no-repeat;
 }
 
 .ms-drop {
-    width: auto;
+    width: 100%;
     /*width: 100%;*/
     overflow: hidden;
     display: none;
@@ -204,6 +204,8 @@
 .ms-drop ul > li.multiple {
     display: block;
     float: left;
+    
+    width:100%!important;
 }
 
 .ms-drop ul > li.group {
@@ -231,7 +233,7 @@
 .ms-drop input[type="checkbox"] {
     margin-right: 5px;
     vertical-align: middle;
-    margin-top: -3px;
+    margin-top: 0px;
 }
 .ms-drop input[type="radio"] {
     margin-right: 5px;
@@ -241,4 +243,20 @@
 
 .ms-drop .ms-no-results {
     display: none;
+}
+.dmaster .ms-choice {
+    
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    margin-top: -3px;
 }

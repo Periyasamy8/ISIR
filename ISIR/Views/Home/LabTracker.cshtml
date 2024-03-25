@@ -1,0 +1,1463 @@
+﻿@{
+    ViewBag.Title = "LabTracker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/underscore.js"></script>
+
+<script>
+    $(document).ready(function () {
+        jQuery.each(jQuery('textarea[data-autoresize]'), function () {
+            var offset = this.offsetHeight - this.clientHeight;
+
+            var resizeTextarea = function (el) {
+                jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+            };
+            jQuery(this).on('keyup input', function () { resizeTextarea(this); }).removeAttr('data-autoresize');
+
+        });
+    });
+</script>
+
+<style>
+    /*.text-control {
+            box-sizing: border-box;
+            resize: none !important;
+            overflow: hidden !important;
+        }*/
+    .textarea {
+        box-sizing: border-box;
+        resize: none;
+    }
+
+    .bootstrap-tagsinput {
+        margin-top: 10px !important;
+        width: 100% !important;
+    }
+
+    .label-info {
+        font-size: 15px !important;
+    }
+</style>
+<link href="~/Styles/RequestTracker.css?i=1" rel="stylesheet" />
+<script src="~/Plugins/RequestTracker.js?i=4"></script>
+<script src="~/Plugins/multiple-emails.js"></script>
+<link href="~/Styles/multiple-emails.css" rel="stylesheet" />
+
+<link href="~/Content/bootstrap-tagsinput-typeahead.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-tagsinput.css" rel="stylesheet" />
+
+<script src="~/Scripts/bootstrap-tagsinput.min.js"></script>
+<style>
+
+
+
+    .btn-default.btn-on-1.active {
+        background-color: #00677F !important;
+        color: white !important;
+    }
+
+    .btn-default.btn-off-1.active {
+        background-color: #00677F !important;
+        color: white !important;
+    }
+
+    .excel-bg {
+        padding: 5px;
+        background: #00677f;
+        color: #fff;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+        margin-right: 48px;
+        margin-top: -5px;
+    }
+</style>
+<script>
+    var scrolled = 0;
+
+    $(document).ready(function () {
+
+
+        $("#btnAccept").on("click", function () {
+            scrolled = scrolled + 1200;
+
+            $(".modal").animate({
+                scrollTop: scrolled
+            });
+
+        });
+
+
+
+    });
+
+
+
+
+
+</script>
+
+<div class="Table_contentpanel">
+    <div class="QMLabtitlebg " style="padding: 5px 10px; text-align:left; color:#000; border-bottom:1px solid #000;">
+        <h4 id="Strong1" style="font-size:20px;">
+            <span>Lab Request Tracker</span>
+            <i class="fas fa-file-excel icon excel-bg" id="excelId" onclick="GetQMRequestTrackerExcel()" data-toggle="tooltip" data-placement="bottom" data-original-title="Export to Excel">
+
+            </i>
+            <div style="margin-right: 2%; display: inline-block; position: absolute; right: 0">
+                @*@if (Convert.ToString(Session["UserAccess"]).Contains("1"))
+                {
+                <a id="CreateRequestMenu" href="@Url.Action("CreateRequest", "Home")" class="btn btn-success btn-xs btn-save" style="">
+                <span class="trn" data-trn-key="Create Request" data-trn-value="">Create Request</span>
+                </a>
+                }*@
+                <button type="button" class="btn btn-success btn-xs btn-ie" id="lnkexcel" style="padding-top: 2px; padding-bottom: 2px; display:none" data-toggle="tooltip" data-placement="bottom" onclick="ExcelDownload();" data-original-title="Export to Excel">
+                    <span class="fas fa-file-excel"></span>
+                </button>
+                <div style="display:inline-block; width:60px; display:none">
+
+                    <label style="font-weight:normal; font-size:16px;">
+
+                        <span>Show</span>
+
+                    </label>
+
+
+
+                </div>
+
+                <div class="btn-group" id="status" style="display:none" data-toggle="buttons">
+
+                    <label class="btn btn-default btn-on-1 btn-sm active" style="padding:8px;">
+
+                        <input type="radio" value="1" name="" checked="checked">All Requests
+                    </label>
+
+                    <label class="btn btn-default btn-off-1 btn-sm " style="padding:8px;">
+
+                        <input type="radio" value="0" name="">My Requests
+                    </label>
+
+                </div>
+            </div>
+        </h4>
+
+    </div>
+    @*show over view count*@
+    <div class="count-value col-md-12" style="padding:0">
+
+        <div id="AllRequestCount" class="inner-count col-md-2 active" style="" onclick="OverViewCountFilterHeader('All Request')">
+
+            <p>
+
+                <span>All Requests</span>
+
+            </p>
+
+            <h2 class="allReq-count">
+
+                <span id="Request0"></span>
+
+                <span class="count-icon">
+
+                </span>
+
+            </h2>
+
+        </div>
+
+        @*<div class="inner-count col-md-2">
+        <p>
+        <span>Open Requests</span>
+        </p>
+        <h2 class="openReq-count">
+        <span  id="Request1"></span>
+        <span class="count-icon">
+        <img src="~/Images/Open.png" />
+        </span>
+        </h2>
+        </div>*@
+
+        <div id="divPendingCnt" class="inner-count col-md-2" onclick="OverViewCountFilterHeader('Pending')">
+
+            <p>
+
+                <span>Pending Requests</span>
+
+            </p>
+
+            <h2 class="pendReq-count">
+
+                <span id="Request1"></span>
+
+                <span class="count-icon">
+
+                    <i class="far fa-clock"></i>
+
+                </span>
+
+            </h2>
+
+        </div>
+
+        <div id="divIn_ProgressCnt" class="inner-count col-md-2" onclick="OverViewCountFilterHeader('In-Progress')">
+
+            <p>
+
+                <span>Requests in Progress</span>
+
+            </p>
+
+            <h2 class="progReq-count">
+
+                <span id="Request2"></span>
+
+                <span class="count-icon">
+
+                    <img src="~/Images/In-Progress.png" />
+
+                </span>
+
+            </h2>
+
+        </div>
+
+        <div id="divRejectedCnt" class="inner-count col-md-2" onclick="OverViewCountFilterHeader('Rejected')">
+
+            <p>
+
+                <span>Rejected Requests</span>
+
+            </p>
+
+            <h2 class="rejReq-count">
+
+                <span id="Request3"></span>
+
+                <span class="count-icon">
+
+                    <img src="~/Images/Rejected.png" />
+
+                </span>
+
+            </h2>
+
+        </div>
+
+        <div id="divClosedCnt" class="inner-count col-md-2" onclick="OverViewCountFilterHeader('Closed')">
+
+            <p>
+
+                <span>Closed Requests</span>
+
+            </p>
+
+            <h2 class="closeReq-count">
+
+                <span id="Request4"></span>
+
+                <span class="count-icon">
+
+                    <img src="~/Images/Closed.png" />
+
+                </span>
+
+            </h2>
+
+        </div>
+        <div id="divUploadCnt" class="inner-count col-md-2">
+
+            <p>
+
+                <span>No.of.Uploaded Files</span>
+
+            </p>
+
+            <h2 class="closeReq-count">
+
+                <span id="Request5"></span>
+
+                <span class="count-icon">
+
+                    <img src="~/Images/upload.png" />
+
+                </span>
+
+            </h2>
+
+        </div>
+
+        <div id="divDownloadCnt" class="inner-count col-md-2" style="border:0">
+
+            <p>
+
+                <span>No.of.Downloaded Files</span>
+
+            </p>
+
+            <h2 class="closeReq-count">
+
+                <span id="Request6"></span>
+
+                <span class="count-icon">
+
+                    <img src="~/Images/download.png" />
+
+                </span>
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="QMLabPage requestTracker-main">
+        <div>
+            <table class="table table-bordered table-hover" style="margin:20px auto; width:98%; cursor: pointer" id="tblLabRequestTracker">
+                <thead>
+                    <tr>
+                        @*<th  scope="col" class="sorting_disabled" style="width: 5%; background-image: none;">
+                        <span class="trn"></span>
+                        </th>*@
+                        @*<th style="width: 90px">Request No.</th>
+                        <th style="width: 120px">Lab Name</th>
+                        <th style="width: 85px">Request Date</th>
+                        <th style="width: 120px">Requester Name</th>
+                        <th style="width: 90px">Sub Department</th>
+                        <th style="width: 90px">Part No.</th>
+                        <th style="width: 90px">Part Name</th>
+                        <th style="width: 90px">Supplier Name</th>
+                        <th style="width: 55px">Quantity</th>
+                        <th style="width: 80px">Reason for Test</th>
+                        <th style="width: 120px">PIC</th>
+                        <th style="width: 75px">Status</th>
+                        <th style="width: 50px">Result</th>
+                        <th style="width: 85px">Closed Date</th>*@
+                        <th style="width: 65px">Request No.</th>
+                        <th style="width: 70px">Lab Name</th>
+                        <th style="width: 70px">Request Date</th>
+                        <th style="width: 70px">Tentative Date</th>
+                        <th style="width: 80px">Requester Name</th>
+                        <th style="width: 70px">Department</th>
+                        <th style="width: 80px">Part No.</th>
+                        <th style="width: 80px">Part Name</th>
+                        <th style="width: 80px">Supplier Name</th>
+                        <th style="width: 50px">Quantity</th>
+                        <th style="width: 80px">Reason for Test</th>
+                        <th style="width: 80px">Equipment</th>
+                        <th style="width: 80px">PIC</th>
+                        <th style="width: 50px">Status</th>
+                        <th style="width: 50px">Result</th>
+                        <th style="width: 70px">Closed Date</th>
+                        <th style="width: 70px">Remarks</th>
+                    </tr>
+                    <tr class="filter">
+                        @*<th class="" scope="col" style="width: 5%; vertical-align: -webkit-baseline-middle;">
+                        <div class="md-checkbox">
+                        <input id="chkall" type="checkbox">
+                        <label for="chkall">
+                        </label>
+                        </div>
+                        </th>*@
+                        @*<th class="filtertxt" scope="col"><input type="text" id="txtReqNo" oninput="myFunction()" class="form-control" /></th>*@
+                        @*<th class="filtertxt" scope="col"><input type="text" id="txtReqNo"  class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                        <select id="ddlLabName" class="form-control"></select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtReqDate" class="form-control date" /></th>
+                        <th class="filtertxt" scope="col"><input type="text"  id="txtReqName" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text"id="txtSubDept"  class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtPartNoFilter" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtPartNameFilter" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtSupName" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtQty" class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                        <select id="ddlReasonTracker" class="form-control">
+
+                        </select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text"  id="txtPIC" class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                        <select class="form-control">
+                        <option>Select</option>
+                        <option>demo</option>
+                        <option>demo</option>
+                        <option>demo</option>
+                        </select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtResult" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" id="txtClosedDate" class="form-control date" /></th>*@
+
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                            <select id="ddlLabName" class="form-control">
+                            </select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control date" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control date" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                            <select id="ddlReasonTracker" class="form-control">
+                            </select>
+                        </th>
+                        <th class="filterdrop1" scope="col">
+                            <select id="ddlEquipment" class="form-control">
+                            </select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filterdrop" scope="col">
+                            <select class="form-control">
+                                <option>Select</option>
+                                <option>demo</option>
+                                <option>demo</option>
+                                <option>demo</option>
+                            </select>
+                        </th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control date" /></th>
+                        <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                    </tr>
+                </thead>
+                <tbody id="TrackerBody">
+                    @*<tr>
+                    <td>demo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-html="true" data-original-title="<b>Accepted</b> <br><b>by </b>S, Sathish Kumar(575) <br><b>on </b>04-04-2019 09:11 AM"><i class="fas fa-check"></i></a>
+                    </td>
+
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Open"><img src="~/Images/o.png" /></a>
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td>demo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-html="true" data-original-title="<b>Rejected</b><br><b>by </b>S, Sathish Kumar(575) <br><b>on </b>04-04-2019 10:05 AM"><i class="fas fa-times"></i></a>
+                    </td>
+
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="In-Progress"><img src="~/Images/i.png" /></a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td>demo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-html="true" data-original-title="<b>Pending</b>"><i class="fas fa-clock"></i></a>
+                    </td>
+
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Closed"><img src="~/Images/c.png" /></a>
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td>demo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td>
+                    <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Rejected"><img src="~/Images/x.png" /></a>
+
+                    </td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td>demo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    </tr>*@
+                </tbody>
+            </table>
+        </div>
+        <div id="divNoRecords" class="text-center">
+            <span class="text-danger">No Records Found</span>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="UpdateAlertModal" role="dialog">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+            <div class="modal-header modalheaderbg">
+                <h4 class="modal-title" id="hUpdate"></h4>
+            </div>
+            <div class="modal-body">
+                <p id="">
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button id="dyOk" type="button" class="btn btn-success btn-xs btn-cancel btn-center"
+                        data-dismiss="modal">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createRequestModel" role="dialog" data-backdrop="static" style="overflow-y: auto;" data-keyboard="false">
+    <div class="modal-dialog modal-xs" style="width:80%;">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <button type="button" class="pull-right btn btn-success btn-xs btn-cancel btn-center" onclick="showlabhistroy();" style="padding: 5px;margin-right:20px;">
+                    Histroy
+                </button>
+                <button type="submit" id="requestCreateCopy" class="pull-right btn btn-success btn-xs btn-cancel btn-center" style="padding: 5px;margin-right:20px;">
+
+                    Create a Copy
+
+                </button>
+
+                <h4 class="modal-title">
+                    <span class="trn" id="LRRefNo"> </span>
+                </h4>
+                <input type="text" id="LabRequestId" hidden="hidden" />
+            </div>
+            <div class="modal-body" style="padding: 0;">
+                <form id="CreateRequest" action="">
+                    <div>
+                        <div class="sec-head" style="margin-top:10px;">Request details</div>
+                        <div class="col-md-6 bottomClass" style="">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Requester Name</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtRequestorName" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Department</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtDepartment" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Sub Department</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtSubDepartment" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Contact No</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control validate[required]" id="txtContactNo" onKeyUp="nctextboxkeyup(this.id);" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Request Date</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control date" id="txtRequestDate" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Request Status</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control " id="txtRequestStatus" disabled="disabled" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both; padding-top:5px;">
+                        <div class="sec-head">
+                            Lab details
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Lab Name</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="ddlLabName" disabled="disabled"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Test Class</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlTestClass" onchange="dropdownchangevalidation(this.id);"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="clear:both; padding-top:5px;">
+                        <div class="sec-head" style="">
+                            Part Details
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>IAR Type</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="ddlIARType">
+                                    @*<option value="0">Select</option>
+                                    <option value="1">IAR</option>
+                                    <option value="2">Non-IAR</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>IAR No.</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtIARNo" />
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Part No</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="hidden" id="hdnPartNoId" value="0" />
+
+                                <input list="ddlPartNo" id="txtPartNo" class="form-control input-sm validate[required]" onKeyUp="nctextboxkeyup(this.id);"
+                                       name="Part No" />
+                                <datalist id="ddlPartNo"></datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Part Name</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control " id="txtPartName" onKeyUp="nctextboxkeyup(this.id);" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Part Status</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlPartStatus" onchange="dropdownchangevalidation(this.id);">
+                                    @*<option value="">Select</option>*@
+                                    @*<option value="Import">Import</option>
+                                    <option value="Local">Local</option>*@
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Part Return Type</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlPartReturnType" onchange="dropdownchangevalidation(this.id);">
+                                    @*<option value="0">Select</option>
+                                    <option value="1">Part Return</option>
+                                    <option value="2">Scrap</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Supplier Name</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                @*<select class="form-control" id="ddlSupplier"></select>*@
+                                <input type="text" id="ddlSupplier" class="form-control validate[required]" onKeyUp="nctextboxkeyup(this.id);" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Model</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlModel" onchange="dropdownchangevalidation(this.id);"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass" style="clear:both">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Variant</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="ddlVariant"></select>
+                                @*<input type="text" id="ddlVariant" class="form-control" />*@
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>ZGS No</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="txtZGSNo" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Reason for test</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlReason" onchange="dropdownchangevalidation(this.id);"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Vehicle / Improvement</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea id="txtVehicledetails" data-autoresize onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Subject</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea id="txtSubject" data-autoresize onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Purpose for Inspection</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea id="txtPurposeInspection" data-autoresize onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Quantity</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" id="txtQuantity" onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3">
+                                <span>Notify to</span><span class="mandatory"></span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="hidden" id="hdnNotifyemail" />
+                                <input type="text" disabled id="txtnotifyto" class="form-control validate[custom[email]]" name="email" />
+                                @*<input type="text" disabled id="txtnotifyto" onkeyup="Notifykeyup()" class="form-control validate[custom[email]]" name="email" />*@
+                                <span style="color:red;display:none;" id="idnotifyto">Invalid Email Address </span>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div style="clear:both; padding-top:5px;">
+                        <div class="sec-head" style="">
+                            Test / Measurement Details
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Measurement Parameter</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea id="txtTestDetails" data-autoresize onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Drawing/Document is attached</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <div class="radio" style="display: inline; margin-left: 20px">
+                                    <label>
+                                        <input type="radio" id="rdoYes" value="1" name="optradio" onclick="checkAttachement('True')" checked>Yes
+                                    </label>
+                                </div>
+                                <div class="radio" style="display: inline; margin-left: 20px">
+                                    <label>
+                                        <input type="radio" id="rdoNo" value="0" name="optradio" onclick="checkAttachement('False')">No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass" style="clear: both; display:none">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Priority</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control validate[required]" id="ddlPriority">
+                                    @*<option value="1">Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>*@
+                                </select>
+                            </div>
+                        </div>
+                        @*<div class="col-lg-12 bottomclass" id="dvAttachedFiles">
+                        <div class="form-group">
+                        <label class="control-label col-sm-1 " for="Upload">
+                        Attachments
+                        </label>
+                        <div class="col-sm-11" id="FileUploadView">
+                        <input type="button" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                        title="Add Attachments" value="Browse..." onclick="document.getElementById('Updatefiles1').click();" />
+                        <input type="file" id="Updatefiles1" name="files[]" multiple style="display: none;" />
+                        </div>
+                        <div class="col-sm-11 doctabledesign" id="DocTableView">
+                        </div>
+                        </div>
+                        </div>*@
+                        <div class="col-md-6 bottomclass" style="clear: both;" id="ShowAttachment">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 labtracker-pad3x" for="Upload">
+                                    Attachments
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="hidden" id="hdnfilecount" />
+                                    <input type="button" id="Attachment" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                           title="Add Attachments" value="Browse..." onclick="document.getElementById('files1').click();" />
+                                    <input type="file" id="files1" name="files[]" multiple style="display: none;" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 doctabledesign" id="DocTable">
+                        </div>
+                        <br />
+                    </div>
+                    <!--Dynamic Alert  Modal -->
+                    <input type="hidden" id="htdRequestStatus" />
+                    <input type="hidden" id="htdStatus" />
+                    <!--Dynamic Alert  Modal -->
+                    <div class="modal fade" id="DynamicAlertModal" role="dialog">
+                        <div class="modal-dialog modal-xs">
+                            <div class="modal-content">
+                                <div class="modal-header modalheaderbg">
+                                    <h4 class="modal-title" id="hTitle3"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="">
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="dyOk" onclick="LabStatusRequest()" type="button" class="btn btn-success btn-xs btn-cancel btn-center"
+                                            data-dismiss="modal">
+                                        OK
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<form id="AcceptRequest" action="">*@
+                    <button type="button" id="btnUpdateClose" class="btn btn-danger btn-xs btn-cancel btn-center pull-right" data-dismiss="modal" style="padding: 5px; margin-left:10px;margin-right: 25px;
+    width: 50px;">
+                        <span class="trn" data-trn-key="Cancel" data-trn-value="">Close</span>
+                    </button>
+                    <button type="submit" id="btnUpdateSave" class="pull-right btn btn-success btn-xs btn-cancel btn-center" style="padding: 5px;width: 50px;">
+                        Save
+                    </button>
+                    <div class="pending-status" style="padding-top:5px; clear:both">
+                        <div id="pending-status-afterAcceptReject" class="pending-status-afterAcceptReject" style="padding-top:5px; clear:both">
+                            <div id="divPendingAccept" class="after-pending-accept">
+                                <div class="sec-head-accepted col-md-12">
+
+                                    <span id="spRequestAcceptStatus"></span>
+                                </div>
+
+                            </div>
+                            <div id="divPendingReject" class="after-pending-reject">
+                                <div class="sec-head-rejected col-md-12">
+                                    @*Request REJECTED by S,Sathish Kumar (575) on 10-Apr-2019 10:15 AM JST*@
+                                    <span id="spRequestRejectStatus"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="AcceptRejectthisrequest" class="sec-head accept-reject-choice col-md-12">
+                            <div class="col-md-8" style="padding:10px 0;">Accept / Reject this request</div>
+                            <div class="col-md-4" style="text-align:center;">
+                                <button type="button" id="btnAccept" class="btn acceptBtn active">Accept</button>
+                                <button type="button" id="btnReject" class="btn rejectBtn active">Reject</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+                <form id="UpdateRequestAll" action="">
+                    <div id="divAccept" class="pending-accept">
+                        <div class="col-md-6 bottomClass" hidden="hidden">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Sample Condition</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" id="txtSampleCondition" onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Tentative date</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" id="txtTentativeDate" readonly class="form-control date validate[required]" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Test Type</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                @*<select id="ddlFeasibility" class="form-control validate[required]">
+                                <option value="0">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                                </select>*@
+                                <div class="radio" style="display: inline; margin-left: 0px">
+                                    <label>
+                                        <input type="radio" id="rdoInternal" value="1" name="optTestType" onclick="checkTestType('False')" checked>Internal
+                                    </label>
+                                </div>
+                                <div class="radio" style="display: inline; margin-left: 20px">
+                                    <label>
+                                        <input type="radio" id="rdoExternal" value="2" onclick="checkTestType('True')" name="optTestType">External
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divFeasibilityYes" class="col-md-6 bottomClass" style="display:none">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>If Yes</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select id="ddlFeasibilityYes" class="form-control validate[required]"></select>
+                            </div>
+                        </div>
+                        <div id="divLaboratoryName" class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Laboratory Name</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" id="txtLaboratoryName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>ISO 17025 Scope</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <select id="ddlPJLAScope" class="form-control validate[required]">
+                                    <option value="0">Select</option>
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 bottomClass">
+                            <label class="col-md-3 labtracker-pad3x">
+                                <span>Test Method</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-9">
+                                <textarea class="form-control validate[required]" data-autoresize id="txtTestMethod" onKeyUp="nctextboxkeyup(this.id);" rows="2"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 bottomClass" style="clear:both">
+                            <button type="button" id="btnRequestClear" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip" data-placement="top" title="" onclick="ClearAccept();" style="margin-right: 1%; padding: 5px" data-original-title="Clear All Entries">
+                                Clear
+                            </button>
+                            <button type="button" id="btnRequestConfirm" data-toggle="confirmation" class="pull-right btn btn-success btn-xs btn-cancel btn-center pending-accept-confirm" style="padding: 5px;">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="divReject" class="pending-reject">
+                    <div class="pending-status-afterAcceptReject" style="padding-top:5px; clear:both">
+                    </div>
+
+                    <div class="col-md-12 bottomClass">
+                        <label class="col-md-12">
+                            <span>Reason for rejecting his request</span><span class="mandatory">*</span>
+                        </label>
+                        <div class="col-md-12">
+                            <textarea class="form-control" data-autoresize id="txtRejectReason" style="min-height:120px;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 bottomClass" style="clear:both">
+                        <button type="button" id="btnRequestRejectClear" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip" data-placement="top" title="" onclick="ClearReject();" style="margin-right: 1%; padding: 5px" data-original-title="Clear All Entries">
+                            Clear
+                        </button>
+                        <button type="button" id="btnRequestReject" class="pull-right btn btn-success btn-xs btn-cancel btn-center pending-reject-confirm" style="padding: 5px;">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+
+                <div id="divRejectAdm" class="pending-reject">
+                    <div class="pending-status-afterAcceptReject" style="padding-top:0px; clear:both">
+
+                        <div id="divPendingRejectAdmin" class="after-pending-reject">
+                            <div class="sec-head-rejected col-md-12">
+                                @*Request REJECTED by S,Sathish Kumar (575) on 10-Apr-2019 10:15 AM JST*@
+                                <span id="spRequestRejectStatusAdmin"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="divRejectByAdm" class="sec-head accept-reject-choice col-md-12">
+                        <div class="col-md-8" style="padding:0px 0;"> Reject this request</div>
+                        <button type="button" id="btnRejectAdm" class="btn rejectBtnAdmin active" style="margin-left: 228px;">Reject</button>
+                    </div>
+                    <div id="divRejectByAdminPanel">
+                        <div class="col-md-12 bottomClass">
+                            <label class="col-md-12">
+                                <span>Reason for rejecting his request</span><span class="mandatory">*</span>
+                            </label>
+                            <div class="col-md-12">
+                                <textarea class="form-control" data-autoresize id="txtRejectReasonAdmin" style="min-height:120px;"></textarea>
+                            </div>
+                        </div>
+
+                        <div id="btnAdminRejectShow" class="col-md-12 bottomClass" style="clear:both">
+                            <button type="button" id="btnRequestRejectClearAdmin" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip" data-placement="top" title="" onclick="ClearRejectAdmin();" style="margin-right: 1%; padding: 5px" data-original-title="Clear All Entries">
+                                Clear
+                            </button>
+                            <button type="button" id="btnRequestRejectAdmin" class="pull-right btn btn-success btn-xs btn-cancel btn-center pending-reject-confirm" style="padding: 5px;">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @*</form>*@
+
+                @*<form id="CloseRequest" action="">*@
+                <div id="divCloseRequest">
+                    <div class="progress-status" style="padding-top:5px; clear:both">
+                        <div class="sec-head col-md-12" id="HeaderClosingrequest">
+                            Closing this request
+                        </div>
+                        <div id="StatusClosingrequest" class="after-close-progress-status" style="padding-top:5px; clear:both">
+                            <div class="sec-head-progress-status col-md-12">
+                                @*Request CLOSED by S,Sathish Kumar (575) on 10-Apr-2019 10:15 AM JST*@
+                                <span id="spRequestClosedStatus"></span>
+                            </div>
+
+                        </div>
+                        <div class="close-request">
+                            <div class="col-md-6 bottomClass">
+                                <label class="col-md-3 labtracker-pad3x">
+                                    <span>Result</span><span class="mandatory">*</span>
+                                </label>
+                                <div class="col-md-9">
+                                    <select id="ddlResult" class="form-control">
+                                        <option value="0">Select</option>
+                                        <option value="1">OK</option>
+                                        <option value="2">Not OK</option>
+                                        <option value="3">Reference</option>
+                                        <option value="4">Analysis</option>
+                                        @*<option value="5">Conditionally Acceptable</option>*@
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 bottomClass">
+                                <label class="col-md-3 labtracker-pad3x">
+                                    <span>NC Details if any</span>
+                                </label>
+                                <div class="col-md-9">
+                                    <textarea id="txtNCdetails" data-autoresize class="form-control" style="" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6 bottomClass" style="display:none">
+                                <label class="col-md-3 labtracker-pad3x">
+                                    <span>Sample Status</span><span class="mandatory">*</span>
+                                </label>
+                                <div class="col-md-9">
+                                    <select id="ddlSampleStatus" class="form-control">
+                                        <option value="0">Select</option>
+                                        <option value="1">Return </option>
+                                        <option value="2">Scrap</option>
+                                        <option value="3">Not Applicable</option>
+                                        <option value="4">Stock</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 bottomClass">
+                                <label class="col-md-3 labtracker-pad3x">
+                                    <span>Send report to</span><span class="mandatory"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="hidden" id="hdnstatusemail" />
+                                    <input type="text" class="form-control" id="progress-status-email" />
+                                    <span style="color:red; display:none;" class="ClsReportToClosingRequest" id="">Invalid Email Address</span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6 bottomClass">
+                                <label class="col-md-3 labtracker-pad3x">
+                                    <span>Remark</span><span class="mandatory"></span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="hidden" id="hdnRemark" />
+                                    <input type="text" class="form-control" id="Remarktxt" />
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-9" style="">
+                            <input type="hidden" id="" />
+                            <button type="button" class="btn btn-success btn-xs pull-left" data-toggle="tooltip"
+                            data-placement="top" title="" onclick="document.getElementById('IARFiles').click();"
+                            data-title="Add Attachments">
+                            <span class="trn">Browse</span>
+                            </button>
+                            <input type="file" id="IARFiles" name="files[]" multiple style="display: none;" />
+                            </div>
+
+                            <div class="col-sm-12 doctabledesign" id="DocTableMesure">
+                            </div>*@
+                            <div class="col-md-6 bottomclass" style="clear: both;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="Upload">
+                                        <span>Attachments</span><span class="mandatory">*</span>
+
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input type="hidden" id="hdnfilecount" />
+                                        <input type="button" id="Attachmentshow" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                               title="Add Attachments" value="Browse..." onclick="document.getElementById('IARFiles').click();" />
+                                        <span style="color:red; display:none;" id="closefilevalidation">Please upload the file</span>
+                                        <input type="file" id="IARFiles" name="files[]" multiple style="display: none;" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 doctabledesign" id="DocTableMesure">
+                            </div>
+
+                        </div>
+
+                        <div id="zoneEquipmentDetails" class="equ-details">
+                            <div class="col-md-12" style="font-size:18px; font-weight: bold; padding-left:80px">Equipment Details <span class="mandatory"></span></div>
+                            <div class="col-md-10 col-md-offset-1">
+                                <table id="tblEquipmentDetails" style="width:100%; border-collapse:separate;">
+                                    <thead>
+                                        <tr>
+                                            <td style="text-align: center; width: 35%;"><span style="font-weight:bold">Equipment Name <span class="mandatory"></span></span></td>
+                                            <td style="text-align: right; width: 25%;"><span style="font-weight:bold; margin-right: 30px;">Machine Hours <span class="mandatory"></span></span></td>
+                                            <td></td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dAddEquipmentDetails">
+                                        @*<tr>
+                                        <td>
+                                        <input type="text" class="form-control" />
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" />
+                                        </td>
+                                        <td><span><i class="fas fa-plus-circle add-equipmentDetails" style="font-size:24px; color: skyblue; cursor:pointer;"></i></span></td>
+                                        </tr>*@
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12 bottomClass" style="clear:both; margin-top:10px; padding-top:10px;">
+                            <button type="button" id="btnRequestCloseClear" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip" data-placement="top" title="" onclick="ClearClose();" style="margin-right: 1%; padding: 5px" data-original-title="Clear All Entries">
+                                Clear
+                            </button>
+                            <button type="button" id="btnRequestClose" class="pull-right btn btn-success btn-xs btn-cancel btn-center progress-close-confirm" style="padding: 5px;">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+
+                    @*</form>*@
+
+
+                    @*<div class="after-close-progress-status" style="padding-top:5px; clear:both">
+                    <div class="sec-head-progress-status col-md-12">
+                    Request CLOSED by S,Sathish Kumar (575) on 10-Apr-2019 10:15 AM JST
+                    </div>
+
+
+
+                    </div>*@
+                </div>
+                <div id="divAmendmentreport">
+                    <div class="progress-status" style="padding-top:5px; clear:both">
+                        <div class="sec-head col-md-12" id="HeaderAmendmentrequest">
+                            Amendment Report
+                        </div>
+                        <div id="StatusAmendmentrequest" class="after-close-progress-status" style="padding-top:5px; clear:both">
+                            <div class="sec-head-progress-status col-md-12">
+                                @*Request CLOSED by S,Sathish Kumar (575) on 10-Apr-2019 10:15 AM JST*@
+                                <span id="RequestAmendmentStatus"></span>
+                            </div>
+                        </div>
+                        <div class="">
+
+                            <div class="col-md-6 bottomClass">
+
+                                <label class="col-md-3 labtracker-pad3x">
+
+                                    <span>Uploaded by</span>
+
+                                </label>
+
+                                <div class="col-md-9">
+
+                                    <input type="text" class="form-control" id="txtUploadedby" />
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 bottomClass">
+
+                                <label class="col-md-3 labtracker-pad3x">
+
+                                    <span>Date</span>
+
+                                </label>
+
+                                <div class="col-md-9">
+                                    <input type="text" id="txtAmendmentDate" readonly class="form-control date" />
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 bottomClass">
+
+                                <label class="col-md-3 labtracker-pad3x">
+
+                                    <span>Amendment details</span><span class="mandatory">*</span>
+
+                                </label>
+
+                                <div class="col-md-9">
+
+                                    <textarea id="txtAmendmentdetails" data-autoresize onKeyUp="nctextboxkeyup(this.id);" class="form-control validate[required]" style="" rows="3"></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12 bottomclass" style="clear: both;">
+
+                                <div class="form-group">
+
+                                    <label class="control-label col-md-1" for="Upload">
+
+                                        Attachments<span class="mandatory">*</span>
+
+                                    </label>
+
+                                    <div class="col-md-9">
+
+
+                                        <input type="hidden" id="hdnAmendment" />
+
+                                        <input type="button" id="AttachmentAmendment" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                               title="Add Attachments" value="Browse..." onclick="document.getElementById('AmendmentFiles').click();" />
+                                        <span style="color:red; display:none;" id="amenfilevalidation">Please upload the file</span>
+                                        <input type="file" id="AmendmentFiles" name="files[]" multiple style="display: none;" />
+
+                                        <p>
+
+                                            <b>Note : </b>Closed Report File Name and Amendment Closed Report File Name should
+
+                                            not be same.
+
+                                        </p>
+
+                                    </div>
+
+                                    <div class="col-md-11 doctabledesign" id="DocTableCloseAmendment">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 bottomClass" style="clear:both; margin-top:10px; padding-top:10px;">
+                        <button type="button" id="btnAmendmentClear" class="btn rejectbtns pull-right btn-xs cancelbtn" data-toggle="tooltip" data-placement="top" title="" onclick="ClearAmendment();" style="margin-right: 1%; padding: 5px" data-original-title="Clear All Entries">
+                            Clear
+                        </button>
+                        <button type="button" id="btnAmendment" class="pull-right btn btn-success btn-xs btn-cancel btn-center progress-close-confirm" style="padding: 5px;">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer modal-footer-lab" style="clear:both;padding:55px;">
+
+                @*<button type="button" class="btn btn-danger btn-xs btn-cancel btn-center pull-right" data-dismiss="modal" style="padding: 5px; margin-left:10px;">
+                <span class="trn" data-trn-key="Cancel" data-trn-value="">Close</span>
+                </button>
+                <button type="submit" id="" class="pull-right btn btn-success btn-xs btn-cancel btn-center" style="padding: 5px;">
+                Save
+                </button>*@
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="Historymodal" role="dialog" data-backdrop="static" style="overflow-y: auto;" data-keyboard="false">
+    <div class="modal-dialog modal-xs" style="width:80%;">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+
+
+                <h4 class="modal-title">
+                    Request Histroy
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-bordered table-condensed table-hover" id="tblLabHMaster"
+                       style="width: 100%; table-layout: fixed; display: ">
+                    <thead>
+                        <tr class="tableheader">
+                            <th scope="col" class="sorting " aria-controls="tblUserLabMaster">
+                                Request No.
+                            </th>
+                            <th scope="col" class="sorting " aria-controls="tblUserLabMaster">
+                                Transaction
+                            </th>
+                            <th scope="col" class="sorting " aria-controls="tblUserLabMaster">
+                                Date
+                            </th>
+                            <th class="filtertxt" scope="col" style="width: 12%; text-align: center;">
+                                Responsible
+                            </th>
+                            <th scope="col" class="sorting " aria-controls="tblUserLabMaster">
+                                Data
+                            </th>
+
+                        </tr>
+                        <tr class="filter">
+                            <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                            <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                            <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                            <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+                            <th class="filtertxt" scope="col"><input type="text" class="form-control" /></th>
+
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="confirmRequestCreateCopy" role="dialog">
+
+    <div class="modal-dialog modal-xs">
+
+        <div class="modal-content">
+
+            <div class="modal-header modalheaderbg">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="">Confirmation</h4>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p id="">
+
+                    Are you sure? Want to copy this request and create a new one?
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer" style="padding:10px;">
+
+                <button id="btnCopySubmit" type="button" class="btn btn-success btn-xs btn-cancel btn-center"
+                        data-dismiss="modal">
+                    OK
+                </button>
+                <button id="btnCopyCancel" type="button" class="btn rejectbtns pull-right btn-xs cancelbtn"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

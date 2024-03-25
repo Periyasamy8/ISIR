@@ -1,0 +1,184 @@
+﻿td .fas, td .fab, td .far {
+    font-size: 25px;
+}
+    /*.fa-check  {
+        color:Green;
+        }
+    .fa-times {
+         color: Red;
+         }
+    .fa-clock {
+         color:#808000;
+         }*/
+.fa-check-circle {
+    color: green;
+}
+.fa-clock {
+    color: #664d00;
+}
+.fa-times-circle {
+    color: Red;
+}
+
+.fa-hourglass-half {
+    color: #808000;
+}
+#tblLabRequestTracker td img {
+    width: 24px !important;
+}
+
+.QMLabtitlebg {
+    border-color: #00677F !important;
+    border-bottom: 1px solid #eee !important;
+}
+        
+    .tooltip{
+        pointer-events: none !important;
+        text-align:left;
+            }
+            
+    .sec-head
+    {
+        padding: 10px 15px;
+        background: #f2f2f2;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        font-size:18px;
+        margin-bottom: 10px;
+        font-weight:bold;
+    }
+.acceptBtn, .rejectBtn, .rejectBtnAdmin {
+    color: #000;
+    background: #ccc;
+    border: 1px solid gray;
+    font-weight: bold;
+}
+    .acceptBtn.active {
+        background:#99e699 !important;
+        border:1px solid #248f24 !important;
+        }
+    .rejectBtn.active {
+        background:#ffa366 !important;
+        border:1px solid red !important;
+        }
+    .rejectBtnAdmin.active {
+        background: #ffa366 !important;
+        border: 1px solid red !important;
+    }
+        
+    .sec-head-accepted, .sec-head-progress-status{
+        padding: 10px 15px;
+        background: #99e699;
+        border-top: 1px solid #248f24;
+        border-bottom: 1px solid #248f24;
+        font-size:18px;
+        margin-bottom: 10px;
+        color: #000;
+        font-weight: bold;
+        }
+      .sec-head-rejected {
+        padding: 10px 15px;
+        background: #ffa366;
+        border-top: 1px solid red;
+        border-bottom: 1px solid red;
+        font-size:18px;
+        margin-bottom: 10px;
+        color: #000;
+        font-weight: bold;
+          }
+          
+      .multiple_emails-ul{
+          max-height:70px;
+          overflow: auto;
+          }
+
+
+
+table tr td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+table tr th {
+    padding:4px !important;
+}
+table#tblLabRequestTracker tr th:first-child, table#tblLabRequestTracker tr td:first-child {
+    padding:9px !important;
+    /*width:3% !important;*/
+}
+
+.count-value {
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 98%;
+    margin: 12px 1%;
+}
+
+    .count-value .inner-count {
+        border-right: 1px dashed gray;
+        padding: 10px;
+        cursor: pointer;
+        padding-bottom: 5px;
+        width: 14.28% !important;
+    }
+
+        .count-value .inner-count p {
+            font-size: 16px;
+            color: #737373;
+            font-weight: bold;
+        }
+
+.allReq-count, .openReq-count, .pendReq-count, .progReq-count, .rejReq-count, .closeReq-count {
+    font-weight: bold;
+    font-size: 34px !important;
+}
+
+
+
+.allReq-count {
+    color: #005366;
+}
+
+.openReq-count {
+    color: #00677F;
+}
+
+.pendReq-count {
+    color: #0092b3;
+}
+
+.progReq-count {
+    color: #00bbe6;
+}
+
+.rejReq-count {
+    color: #66e3ff;
+}
+
+.closeReq-count {
+    color: #99ecff;
+}
+
+.inner-count.active {
+    background-color: #e6f7ff !important;
+}
+
+    .inner-count.active h2 {
+        color: #b30000 !important;
+    }
+
+.inner-count .count-icon {
+    float: right;
+}
+
+    .inner-count .count-icon img {
+        width: 28px;
+    }
+
+    .inner-count .count-icon i {
+        font-size: 28px;
+    }
+
+    .colorred {
+        background: #fbefef !important;
+    }
