@@ -99,17 +99,18 @@ span.multiselect-native-select select
     margin-right: 0;
 }
 
-span.multiselect-native-select .btn
-{
+span.multiselect-native-select .btn {
     display: inline-block;
     padding-left: 15px;
     padding-top: 4px;
     margin-bottom: 0;
-    font-size: 11px;
+    font-size: 13px;
     width: 100%;
-    height: 25px;
-    font-weight: normal; /* line-height: 1.42857143; */
-    text-align: left; /* white-space: nowrap; */
+    height: 30px;
+    font-weight: normal;
+    /* line-height: 1.42857143; */
+    text-align: left;
+    /* white-space: nowrap; */
     vertical-align: middle;
     -ms-touch-action: manipulation;
     touch-action: manipulation;

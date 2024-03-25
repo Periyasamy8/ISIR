@@ -1,5 +1,5 @@
 ﻿/*------------------------------------------------------------------
-Audit Tool Admin Template by Ganapathi Subramaniam, Arun Prasad
+Concern Tracking System Admin Template by Ganapathi Subramaniam, Arun Prasad
 
 For
 
@@ -7,7 +7,7 @@ Daimler India Commercial Vehicle
 ------------------------------------------------------------------*/
 
 /*****************************************************************
-Audit Tool Theme.js Table of Contents
+Concern Tracking System Theme.js Table of Contents
 
 - Document Ready State
 - ShrinkTable
@@ -17,6 +17,28 @@ Audit Tool Theme.js Table of Contents
 	
 !Note: You can search using the title above
 *****************************************************************/
+
+function nctextboxkeyup(id) {
+    if ($('#' + id).val() == '') {
+        $('#' + id).css('border', '1px solid red');
+    }
+    else {
+        $('#' + id).css('border', '1px solid #ccc');
+    }
+}
+
+function dropdownchangevalidation(id) {
+    if ($('#' + id).val() == '') {
+        $('#' + id).css('border', '1px solid red');
+    }
+    else {
+        $('#' + id).css('border', '1px solid #ccc');
+    }
+}
+
+function getSum(total, num) {
+    return parseFloat(total) + Math.round(num);
+}
 
 // Document Ready State
 function getQueryStrings() {
@@ -46,145 +68,187 @@ var dict = {
         en: "Japanese"
     },
     "Change Password": {
-        jp: "パスワード変更",
+        jp: "パスワードを変更する",
         en: "Change Password"
     },
     "Last Login": {
-        jp: "最終ログイン",
+        jp: "前回のログイン",
         en: "Last Login"
     },
     "Log out": {
         jp: "ログアウト",
         en: "Log out"
     },
-    "DTA QM Internal Audit Tool": {
-        jp: "ＤＴＡ　ＱＭ内部監査ツール",
-        en: "DTA QM Internal Audit Tool"
+    "DTA QM Concern Tracking System": {
+        jp: "DTA QM 問題点追跡システム",
+        en: "DTA QM Concern Tracking System"
     },
-    "Audit Tracker": {
-        jp: "監査追跡",
-        en: "Audit Tracker"
+    "Home": {
+        jp: "ホーム",
+        en: "Home"
     },
-    "Audit scheduling": {
-        jp: "監査スケジュール",
-        en: "Audit scheduling"
+    "Concern Tracker": {
+        jp: "懸念トラッカー",
+        en: "Concern Tracker"
     },
-    "Audit": {
-        jp: "監査",
-        en: "Audit"
-    }
-    ,
-    "Reporting": {
-        jp: "報告",
-        en: "Reporting"
+    "Product Audit": {
+        jp: "製品監査",
+        en: "Product Audit"
     },
-    "Auditor": {
-        jp: "監査員",
-        en: "Auditor"
-    },
-    "Correction": {
-        jp: "応急処置（不適合の除去)",
-        en: "Correction"
-    },
-    "Q Rep": {
-        jp: "コアチームメンバー",
-        en: "Q Representative"
-    },
-    "Q Representative": {
-        jp: "コアチームメンバー",
-        en: "Q Representative"
-    },
-    "Core Team Member": {
-        jp: "コアチームメンバー",
-        en: "Core Team Member"
-    },
-    "Q Rep/Core Team Member": {
-        jp: "コアチームメンバ",
-        en: "Q Rep/Core Team Member"
-    },
-    "Review": {
-        jp: "レビュー",
-        en: "Review"
-    },
-
     "Analysis": {
         jp: "分析",
         en: "Analysis"
     },
-    "Consolidated Acceptance Report": {
-        jp: "監査完了レポート",
-        en: "Consolidated Acceptance Report"
+    "Extras": {
+        jp: "エクストラ",
+        en: "Extras"
     },
-    "Consolidated NC Report": {
-        jp: "指摘事項レポート",
-        en: "Consolidated NC Report"
+    "Create Concern": {
+        jp: "懸念を作成する",
+        en: "Create Concern"
     },
-
-    "Scheduled Audits": {
-        jp: "予定された監査",
-        en: "Scheduled Audits"
+    "Search": {
+        jp: "サーチ",
+        en: "Search"
     },
-    "Schedule New Audit": {
-        jp: "新しい監査追加",
-        en: "Schedule New Audit"
+    "All": {
+        jp: "すべて",
+        en: "All"
     },
-    "Audit Reference Number": {
-        jp: "監査NO.",
-        en: "Audit Reference Number"
+    "Own Concerns": {
+        jp: "自分の懸念",
+        en: "Own Concerns"
     },
-    "Audit Reference No / NC No": {
-        jp: "監査NO / 是正処置要求書No",
-        en: "Audit Reference No / NC No"
-    }
-    ,
-    "Audit Reference No": {
-        jp: "監査NO.",
-        en: "Audit Reference No"
-    }
-    ,
-    "Audit Ref No": {
-        jp: "監査NO.",
-        en: "Audit Ref No"
+    "Reopened": {
+        jp: "再オープン",
+        en: "Reopened"
     },
-    "Audit Type": {
-        jp: "監査種別",
-        en: "Audit Type"
+    "Due for Closure": {
+        jp: "期限前",
+        en: "Due for Closure"
     },
-    "Plant": {
-        jp: "工場",
-        en: "Plant"
+    "Overdue Closure": {
+        jp: "期限越え",
+        en: "Overdue Closure"
     },
-    "Department": {
-        jp: "本部",
-        en: "Department"
+    "Concern No": {
+        jp: "問題点番号",
+        en: "Concern No"
     },
-    "Lead Auditor": {
-        jp: "主任監査員",
-        en: "Lead Auditor"
+    "Shop / Project": {
+        jp: "ショップ/プロジェクト",
+        en: "Shop / Project"
     },
-
-    "Date of Audit": {
-        jp: "監査日",
-        en: "Date of Audit"
+    "QFL Type": {
+        jp: "QFLタイプ",
+        en: "QFL Type"
     },
-    "Date Of Audit": {
-        jp: "監査日",
-        en: "Date Of Audit"
+    "Description": {
+        jp: "説明",
+        en: "Description"
     },
-
+    "Damage Code": {
+        jp: "ダメージコード",
+        en: "Damage Code"
+    },
+    "Created Date": {
+        jp: "作成日",
+        en: "Created Date"
+    },
+    "Class": {
+        jp: "クラス",
+        en: "Class"
+    },
+    "Ageing": {
+        jp: "エージング",
+        en: "Ageing"
+    },
+    "Resp Person": {
+        jp: "担当者",
+        en: "Resp Person"
+    },
+    "Resp Department": {
+        jp: "責任部署",
+        en: "Resp Department"
+    },
+    "Production Stage": {
+        jp: "世代",
+        en: "Production Stage"
+    },
+    "Part No": {
+        jp: "部品番号",
+        en: "Part No"
+    },
     "Status": {
-        jp: "ステータス",
+        jp: "状態",
         en: "Status"
     },
-
+    "Raised by": {
+        jp: "作成者",
+        en: "Raised by"
+    },
+    "Select": {
+        jp: "選択",
+        en: "Select"
+    },
+    "Close": {
+        jp: "閉じる",
+        en: "Close"
+    },
+    "Select All": {
+        jp: "すべて選択",
+        en: "Select All"
+    },
+    "All selected": {
+        jp: "すべて選択",
+        en: "All selected"
+    },
+    "From Date": {
+        jp: "日付から",
+        en: "From Date"
+    },
+    "To Date": {
+        jp: "現在まで",
+        en: "To Date"
+    },
+    "filtered from": {
+        jp: "フィルタリングされた",
+        en: "filtered from"
+    },
+    "total entries": {
+        jp: "合計エントリ",
+        en: "total entries"
+    },
+    "No matching records found": {
+        jp: "該当する記録が見つかりません",
+        en: "No matching records found"
+    },
+    "No Records Found": {
+        jp: "レコードが見つかりません",
+        en: "No Records Found"
+    },
+    "Confirmation": {
+        jp: "確認",
+        en: "Confirmation"
+    },
+    "OK": {
+        jp: "はい",
+        en: "OK"
+    },
     "Showing": {
-        jp: "を表示",
+        jp: "見せる",
         en: "Showing"
     },
-
-
+    "to ": {
+        jp: "に",
+        en: "to"
+    },
+    "of": {
+        jp: "の",
+        en: "of"
+    },
     "entries": {
-        jp: "項目中",
+        jp: "エントリー",
         en: "entries"
     },
     "Previous": {
@@ -195,1240 +259,899 @@ var dict = {
         jp: "次",
         en: "Next"
     },
-
-
-    "Sub Function": {
-        jp: "統括部 (本部)",
-        en: "Sub Function"
+    "Browse": {
+        jp: "添付",
+        en: "Browse"
     },
-
-    "Remarks": {
-        jp: "内容", //jp: "備考",
-        en: "Remarks"
+    "Plant": {
+        jp: "工場",
+        en: "Plant"
+    },
+    "Shop / Line / Project": {
+        jp: "ショップ/ライン/プロジェクト",
+        en: "Shop / Line / Project"
+    },
+    "Issue Description": {
+        jp: "不具合内容",
+        en: "Issue Description"
+    },
+    "Defect Class": {
+        jp: "デフェクトクラス/重要度",
+        en: "Defect Class"
+    },
+    "Date of occurance": {
+        jp: "発生日",
+        en: "Date of occurance"
+    },
+    "Quality Gate": {
+        jp: "クオリティゲート",
+        en: "Quality Gate"
+    },
+    "No of Defects": {
+        jp: "不良/検査数",
+        en: "No of Defects"
+    },
+    "Vehicle/Product Type": {
+        jp: "機種/品番",
+        en: "Vehicle/Product Type"
+    },
+    "Variant": {
+        jp: "バリアント",
+        en: "Variant"
+    },
+    "Part Name": {
+        jp: "部品名/品名",
+        en: "Part Name"
+    },
+    "Station No": {
+        jp: "工程番号",
+        en: "Station No"
+    },
+    "Defect Category": {
+        jp: "不具合項目",
+        en: "Defect Category"
+    },
+    "Customer Impact": {
+        jp: "顧客への影響",
+        en: "Customer Impact"
+    },
+    "Supplier Name": {
+        jp: "サプライヤ名",
+        en: "Supplier Name"
+    },
+    "Defect Source": {
+        jp: "発生源",
+        en: "Defect Source"
+    },
+    "Responsible Person": {
+        jp: "担当者",
+        en: "Responsible Person"
+    },
+    "Responsible Department": {
+        jp: "責任部署",
+        en: "Responsible Department"
+    },
+    "Image": {
+        jp: "画像",
+        en: "Image"
+    },
+    "Supplier": {
+        jp: "サプライヤー",
+        en: "Supplier"
+    },
+    "Transit": {
+        jp: "トランジット",
+        en: "Transit"
+    },
+    "Logistics": {
+        jp: "ロジスティクス",
+        en: "Logistics"
+    },
+    "Production Line": {
+        jp: "生産ライン",
+        en: "Production Line"
+    },
+    "Stockyard": {
+        jp: "ストックヤード",
+        en: "Stockyard"
+    },
+    "Dealer Stock": {
+        jp: "ディーラーストック",
+        en: "Dealer Stock"
+    },
+    "Field": {
+        jp: "フィールド",
+        en: "Field"
+    },
+    "Affected Qty": {
+        jp: "影響を受ける数量",
+        en: "Affected Qty"
+    },
+    "Retrofitment/Rework Qty as on date": {
+        jp: "レトロフィット/リワーク",
+        en: "Retrofitment/Rework Qty as on date"
+    },
+    "Issue History": {
+        jp: "発行履歴",
+        en: "Issue History"
     },
     "Date": {
         jp: "日付",
         en: "Date"
     },
-    "Time of Audit": {
-        jp: "監査時間",
-        en: "Time of Audit"
-    },
-    "Attachements": {
-        jp: "添付資料",
-        en: "Attachements"
-    },
-
-    "Save": {
-        jp: "保存",
-        en: "Save"
-    },
-
-
-    "Select": {
-        jp: "選択する",
-        en: "Select"
-    },
-    "Close": {
-        jp: "閉じる",
-        en: "Close"
-    },
-    "Scheduled": {
-        jp: "予定された",
-        en: "Scheduled"
-    },
-    "Inprogress": {
-        jp: "推進中",
-        en: "Inprogress"
-    },
-    "Completed": {
-        jp: "完了済",
-        en: "Completed"
-    },
-
-
-
-    "Browse":
-    {
-        jp: "参照",
-        en: "Browse"
-    }
-    ,
-    "Select All":
-    {
-        jp: "全選択",
-        en: "Select All"
-    },
-    "All selected":
-    {
-        jp: "全選択",
-        en: "All selected"
-    },
-    "filtered from":
-    {
-        jp: "～からフィルタされた",
-        en: "filtered from"
-    },
-
-    "No matching records found":
-    {
-        jp: "適切な対象が見つかりません",
-        en: "No matching records found"
-    },
-    "Auditee": {
-        jp: "被監査者",
-        en: "Auditee"
-    },
-    "Major NC": {
-        jp: "重大な不適合",
-        en: "Major NC"
-    },
-    "Minor NC": {
-        jp: "軽微な不適合",
-        en: "Minor NC"
-    },
-
-    "Audit Report": {
-        jp: "監査レポート",
-        en: "Audit Report"
-    },
-
-    "Audit Scheduled": {
-        jp: "監査スケジュール",
-        en: "Audit Scheduled"
-    },
-
-    "Audit Report Inprogress": {
-        jp: "監査レポート作成中",
-        en: "Audit Report Inprogress"
-    },
-
-    "Pending for Auditee Approval": {
-        jp: "被監査部門の承認待ち",
-        en: "Pending for Auditee Approval"
-    },
-
-    "Accepted": {
-        jp: "承認",
-        en: "Accepted"
-    },
-    "Rejected": {
-        jp: "不承認",
-        en: "Rejected"
-    },
-    "Accepted/Rejected": {
-        jp: "承認/不承認",
-        en: "Accepted/Rejected"
-    },
-
-    "NC Type": {
-        jp: "不適合タイプ",
-        en: "NC Type"
-    },
-
-    "NC No": {
-        jp: "是正処置要求書No.",
-        en: "NC No"
-    },
-
-    "NC Number": {
-        jp: "是正処置要求書No.",
-        en: "NC Number"
-    },
-
-    "NC Clause": {
-        jp: "不適合条項",
-        en: "NC Clause"
-    },
-
-    "Desc": {
-        jp: "条文",
-        en: "Desc"
-    },
-
-    "Process No": {
-        jp: "プロセスNO.",
-        en: "Process No"
-    },
-    "Process No. & Desc": {
-        jp: "プロセスナンバー",
-        en: "Process No. & Desc"
-    },
-
-    "NC Details": {
-        jp: "不適合内容詳細",
-        en: "NC Details"
-    },
-
-    "Non Conformity": {
-        jp: "不適合",
-        en: "Non Conformity"
-    },
-
-    "Positive Observation": {
-        jp: "良い点",
-        en: "Positive Observation"
-    },
-
-    "Add New": {
-        jp: "新規追加",
-        en: "Add New"
-    },
-
-    "Save as Draft": {
-        jp: "下書保存",
-        en: "Save as Draft"
-    },
-
-    "Submit": {
-        jp: "提出",
-        en: "Submit"
-    },
-
-
-    "OFI": {
-        jp: "改善の機会",
-        en: "OFI"
-    },
-
-    "+Ve Obs": {
-        jp: "強味",
-        en: "+Ve Obs"
-    },
-
-    "Responsible Person": {
-        jp: "担当者",
-        en: "Responsible Person"
-    },
-
-    "Accept": {
-        jp: "受領",
-        en: "Accept"
-    },
-
-    "Reject": {
-        jp: "拒否",
-        en: "Reject"
-    },
-
-    "Audit has been Scheduled successfully": {
-        jp: "監査は正常に計画された",
-        en: "Audit has been Scheduled successfully"
-    },
-
-    "Audit Schedule has been updated successfully": {
-        jp: "監査計画が正常に更新された",
-        en: "Audit Schedule has been updated successfully"
-    },
-
-    "The Audit Report has been saved as Draft": {
-        jp: "監査レポートはドラフトとして保存されました",
-        en: "The Audit Report has been saved as Draft"
-    },
-
-    "The Audit Report has been Submitted and sent for Auditee Approval": {
-        jp: "監査レポートは、被監査部門に転送されました",
-        en: "The Audit Report has been Submitted and sent for Auditee Approval"
-    },
-
-    "No Records Found": {
-        jp: "対象が見つかりません",
-        en: "No Records Found"
-    },
-    "Corrective and Preventive Actions": {
-        jp: "是正処置・予防処置",
-        en: "Corrective and Preventive Actions"
-    },
-
-    "Confirmation": {
-        jp: "確認",
-        en: "Confirmation"
-    },
-    "OK": {
-        jp: "OK",
-        en: "OK"
-    },
-    "PDF": {
-        jp: "PDF",
-        en: "PDF"
-    },
-
-    "Rejected Reason": {
-        jp: "拒否理由",
-        en: "Rejected Reason"
-    },
-    "Auditor should be able to raise NC only on or after Audit start date": {
-        jp: "監査人は監査開始日以降にのみNCを提出することができる",
-        en: "Auditor should be able to raise NC only on or after Audit start date"
-    },
-    "NC Description": {
-        jp: "不適合内容",
-        en: "NC Description"
-    },
-    "Process Description": {
-        jp: "プロセスの記述",
-        en: "Process Description"
-    },
-    "Acceptance":
-    {
-        jp: "承認",
-        en: "Acceptance"
-    },
-    "Consolidated NC Report":
-    {
-        jp: "不適合サマリーレポート",
-        en: "Consolidated NC Report"
-    },
-    "Measure":
-    {
-        jp: "改善",
-        en: "Measure"
-    },
-    "No matching records found":
-    {
-        jp: "適切な対象が見つかりません",
-        en: "No matching records found"
-    },
-    "Submission":
-    {
-        jp: "提出",
-        en: "Submission"
-    },
-
-    "Accepted on":
-    {
-        jp: "受け入れられた",
-        en: "Accepted on"
-    },
-    "Co Auditor":
-    {
-        jp: "監査員",
-        en: "Co Auditor"
-    },
-    "Consolidated Measure Ageing Report":
-    {
-        jp: "確定された是正措置レポート",
-        en: "Consolidated Measure Ageing Report"
-    },
-    "Consolidated Measure Status Report":
-    {
-        jp: "確定された是正措置状況レポート",
-        en: "Consolidated Measure Status Report"
-    },
-    "Consolidated NC Acceptance Report Dept wise":
-    {
-        jp: "確定された不適合受理部門別レポート",
-        en: "Consolidated NC Acceptance Report Dept wise"
-    },
-    "Consolidated NC Acceptance Report Department wise":
-    {
-        jp: "確定された不適合受理部門別レポート",
-        en: "Consolidated NC Acceptance Report Department wise"
-    },
-    "Consolidated NC Report Dept wise":
-    {
-        jp: "確定された不適合部門別レポート",
-        en: "Consolidated NC Report Dept wise"
-    },
-    "From Date":
-    {
-        jp: "日付から",
-        en: "From Date"
-    },
-    "of":
-    {
-        jp: "トータルエントリー",
-        en: "of"
-    },
-    "Schedule Adherence Report":
-    {
-        jp: "スケジュール追跡レポート",
-        en: "Schedule Adherence Report"
-    },
-    "to":
-    {
-        jp: "まで",
-        en: "to"
-    },
-    "To Date":
-    {
-        jp: "現在まで",
-        en: "To Date"
-    },
-    "Report":
-    {
-        jp: "レポート",
-        en: "Report"
-    },
-    "Vertical":
-    {
-        jp: "部門",
-        en: "Vertical"
-    },
-    "The Audit has been scheduled and Mail notification sent to respective stake holders":
-    {
-        jp: "監査はスケジュールされ、それぞれのに関係者にメール通知が送信されました",
-        en: "The Audit has been scheduled and Mail notification sent to respective stake holders"
-    },
-    "The Audit schedule has been updated successfully":
-    {
-        jp: "監査スケジュールが正常に更新されました",
-        en: "The Audit schedule has been updated successfully"
-    },
-    "The Audit Report has been generated and sent to the Auditee for Approval":
-    {
-        jp: "監査報告書が作成され、承認のために被監査人に送付されました",
-        en: "The Audit Report has been generated and sent to the Auditee for Approval"
-    },
-    "The Audit has been closed without NCs and notification sent to Auditee":
-    {
-        jp: "NCなしで監査が終了し、被監査人に通知が送信されました",
-        en: "The Audit has been closed without NCs and notification sent to Auditee"
-    },
-    "Audit Report has been Accepted and sent to responsible person for necessary actions":
-    {
-        jp: "監査報告が承認され、必要な措置について担当者に送付されました",
-        en: "Audit Report has been Accepted and sent to responsible person for necessary actions"
-    },
-    "Audit Report has been Rejected and sent back to the Auditor for review":
-    {
-        jp: "監査報告は拒否され、レビューのために監査員に差し戻されました",
-        en: "Audit Report has been Rejected and sent back to the Auditor for review"
-    },
-    "The Actions has been sent to the Auditee for Approval":
-    {
-        jp: "措置は承認のために被監査人に送信されました",
-        en: "The Actions has been sent to the Auditee for Approval"
-    },
-    "The Actions has been sent for Approval":
-    {
-        jp: "措置は承認され、確認のためにに送られました。",
-        en: "The Actions has been sent for Approval"
-    },
-    "The Actions has been accepted and sent to the Auditor for final approval":
-    {
-        jp: "措置は承認され、最終承認のために監査員に送付されました",
-        en: "The Actions has been accepted and sent to the Auditor for final approval"
-    },
-    "The Actions are rejected and sent back to the responsible for review":
-    {
-        jp: "措置は却下され、レビューのため担当者に差し戻されました",
-        en: "The Actions are rejected and sent back to the responsible for review"
-    },
-    "The Actions has been accepted and the NC is closed":
-    {
-        jp: "措置が受け入れられ、NCがクローズされました",
-        en: "The Actions has been accepted and the NC is closed"
-    },
-    "The Actions are rejected and sent back to the responsible for review":
-    {
-        jp: "措置は却下され、レビューのため担当者に差し戻されました",
-        en: "The Actions are rejected and sent back to the responsible for review"
-    },
-    "The Actions has been accepted and the NC is closed":
-    {
-        jp: "措置が受け入れられ、NCがクローズされました",
-        en: "The Actions has been accepted and the NC is closed"
-    },
-    "The Actions are rejected and sent back to the responsible for review":
-    {
-        jp: "アクションは却下され、レビューのため担当者に差し戻されました",
-        en: "The Actions are rejected and sent back to the responsible for review"
-    },
-    "Thank you! Your feedback has been updated":
-    {
-        jp: "ありがとうございました！ あなたのフィードバックは更新されました",
-        en: "Thank you! Your feedback has been updated"
-    },
-    "Audit Report has been Accepted and sent to responsible person for necessary actions":
-    {
-        jp: "監査報告が承認され、必要な措置について担当者に送付されました",
-        en: "Audit Report has been Accepted and sent to responsible person for necessary actions"
-    },
-    "Audit Report has been Rejected and sent back to the Auditor for review":
-    {
-        jp: "監査報告は拒否され、レビューのために監査員に差し戻されました",
-        en: "Audit Report has been Rejected and sent back to the Auditor for review"
-    },
-    "The Audit Report has been accepted already on":
-    {
-        jp: "監査報告は既に承認されています",
-        en: "The Audit Report has been accepted already on"
-    },
-    "The Audit Report has been rejected already on":
-    {
-        jp: "監査報告は既に却下されています",
-        en: "The Audit Report has been rejected already on"
-    },
-    "The Actions has been accepted and sent to the Auditor for final approval":
-    {
-        jp: "措置は承認され、最終承認のために監査員に送付されました",
-        en: "The Actions has been accepted and sent to the Auditor for final approval"
-    },
-    "The Actions are rejected and sent back to the responsible for review":
-    {
-        jp: "措置は拒否され、レビューのため担当者に差し戻されました",
-        en: "The Actions are rejected and sent back to the responsible for review"
-    },
-    "The Actions has been accepted already on":
-    {
-        jp: "措置は既に承認されています",
-        en: "The Actions has been accepted already on"
-    },
-    "The Actions has been rejected already on":
-    {
-        jp: "措置は既に却下されています",
-        en: "The Actions has been rejected already on"
-    },
-    "The Actions has been accepted and the NC is closed":
-    {
-        jp: "措置が受け入れられ、NCがクローズされました",
-        en: "The Actions has been accepted and the NC is closed"
-    },
-    "The Actions are rejected and sent back to the responsible for review":
-    {
-        jp: "措置は却下され、レビューのため担当者に差し戻されました",
-        en: "The Actions are rejected and sent back to the responsible for review"
-    },
-    "Pending-belowtarget":
-    {
-        jp: "保留中 - ターゲットの下回る",
-        en: "Pending-belowtarget"
-    },
-    "Pending":
-    {
-        jp: "保留中",
-        en: "Pending"
-    },
-    "Pending-withintarget":
-    {
-        jp: "保留中 - ターゲット内",
-        en: "Pending-withintarget"
-    },
-    "Pending-abovetarget":
-    {
-        jp: "保留中 - ターゲットの上回る",
-        en: "Pending-abovetarget"
-    },
-    "Submitted":
-    {
-        jp: "提出済み",
-        en: "Submitted"
-    },
-    "Issue Description":
-    {
-        jp: "問題の記述",
-        en: "Issue Description"
-    },
-    //"Root Cause":
-    //{
-    //    jp: "根本原因",
-    //    en: "Root Cause"
-    //},
-    //"Corrective Action":
-    //{
-    //    jp: "是正処置（再発防止対策)",
-    //    en: "Corrective Action"
-    //},
-    "Created by":
-    {
-        jp: "作成者",
-        en: "Created by"
-    },
-    "Approved by":
-    {
-        jp: "承認者",
-        en: "Approved by"
-    },
-    "Checked by":
-    {
-        jp: "審査者",
-        en: "Checked by"
-    },
-    "Target Date":
-    {
-        jp: "対策実施日/対策予定日",
-        en: "Target Date"
-    },
-    "Responsible":
-    {
-        jp: "担当者",
-        en: "Responsible"
-    },
-    "Horizontal Deployment":
-    {
-        jp: "水平展開",
-        en: "Horizontal Deployment"
-    },
-    "Applicable Status":
-    {
-        jp: "該当するステータス",
-        en: "Applicable Status"
-    },
-    "Audit Details":
-    {
-        jp: "監査詳細",
-        en: "Audit Details"
-    },
-    "Rejected on":
-    {
-        jp: "拒否された日付",
-        en: "Rejected on"
-    }
-    ,
-    "Rejected On":
-    {
-        jp: "拒否された日付",
-        en: "Rejected On"
-    }
-    ,
-    "Accepted by Auditee on":
-    {
-        jp: "～を被監査人によって受け入れられた",
-        en: "Accepted by Auditee on"
-    },
-    "Accepted by Auditor on":
-    {
-        jp: "～を監査員によって受け入れられた",
-        en: "Accepted by Auditor on"
-    },
-    "Objective Evidence":
-    {
-        jp: "客観的な証拠",
-        en: "Objective Evidence"
-    },
-    "Review Auditee":
-    {
-        jp: "被監査人見直し",
-        en: "Review Auditee"
-    },
-    "Is this Non Conformity applicable to your department":
-    {
-        jp: "この不適合はあなたの部署に該当しますか？",
-        en: "Is this Non Conformity applicable to your department"
-    },
-    "Yes":
-    {
-        jp: "はい",
-        en: "Yes"
-    },
-    "No":
-    {
-        jp: "いいえ",
-        en: "No"
-    },
-    "History":
-    {
-        jp: "履歴",
-        en: "History"
-    },
-    "Audit Date":
-    {
+    "VIN No / PIN": {
+        jp: "車番",
+        en: "VIN No / PIN"
+    },
+    "VIN/Prod. Iden. No.": {
+        jp: "VIN / Prod. Iden. いいえ.",
+        en: "VIN/Prod. Iden. No."
+    },
+    "Observed By": {
+        jp: "発見者/場所",
+        en: "Observed By"
+    },
+    "Remarks": {
+        jp: "備考",
+        en: "Remarks"
+    },
+    "Add": {
+        jp: "追加",
+        en: "Add"
+    },
+    "Clear": {
+        jp: "クリア",
+        en: "Clear"
+    },
+    "Product Audit Tracker": {
+        jp: "製品監査トラッカー",
+        en: "Product Audit Tracker"
+    },
+    "Audit Date": {
         jp: "監査日",
         en: "Audit Date"
     },
-    "Overall status monthly wise":
-    {
-        jp: "月次別全体ステータス",
-        en: "Overall status monthly wise"
+    "Total DPU": {
+        jp: "総DPU",
+        en: "Total DPU"
     },
-    "Overall Status":
-    {
-        jp: "全体の状況",
-        en: "Overall Status"
+    "Audited By": {
+        jp: "監査人",
+        en: "Audited By"
     },
-    "Number of Audits":
-    {
-        jp: "監査数",
-        en: "Number of Audits"
+    "Audit Observation": {
+        jp: "監査観測",
+        en: "Audit Observation"
     },
-    "Actual":
-    {
-        jp: "実績",
-        en: "Actual"
+    "Submit": {
+        jp: "提出する",
+        en: "Submit"
     },
-    "total entries":
-    {
-        jp: "トータルエントリー",
-        en: "total entries"
+    "Save": {
+        jp: "セーブ",
+        en: "Save"
     },
-    "Plan":
-    {
-        jp: "計画",
-        en: "Plan"
-    },
-    "Home":
-    {
-        jp: "ホーム",
-        en: "Home"
-    }
-    ,
-    "Not Started":
-    {
-        jp: "始まっていない",
-        en: "Not Started"
-    }
-    ,
-    "Pending with auditee":
-    {
-        jp: "承認待ち",
-        en: "Pending with auditee"
-    }
-    ,
-    "Pending with auditor":
-    {
-        jp: "承認待ち",
-        en: "Pending with auditor"
-    }
-    ,
-    "NC CAPA Status Report":
-    {
-        jp: "NC CAPAステータスレポート",
-        en: "NC CAPA status Report"
-    }
-    ,
-    "Rejected Comments":
-    {
-        jp: "拒否コメント",
-        en: "Rejected Comments"
-    }
-    ,
-    "S.NO":
-    {
-        jp: "数",
-        en: "S.NO"
-    },
-    "Comments":
-    {
-        jp: "コメント",
-        en: "Comments"
-    }
-    ,
-    "Rejected by":
-    {
-        jp: "拒否された人",
-        en: "Rejected by"
-    },
-    "Major":
-    {
-        jp: "メジャー",
-        en: "Major"
-    }
-    ,
-    "Minor":
-    {
-        jp: "マイナー",
-        en: "Minor"
-    },
-    "With in":
-    {
-        jp: "以内",
-        en: "Within"
-    },
-    "Within 30  days":
-    {
-        jp: "30日未満",
-        en: "Within 30  days"
-    },
-    "More than 30 days":
-    {
-        jp: "30日以上",
-        en: "More than 30 days"
-    },
-    "Days":
-    {
-        jp: "日々",
-        en: "Days"
-    },
-    "More than":
-    {
-        jp: "より多い",
-        en: "More than"
-    }
-    ,
-    "Type of Observation":
-    {
-        jp: "評価タイプ",
-        en: "Type of Observation"
-    },
-
-    "Document Reference":
-    {
-        jp: "規格＆要求事項",
-        en: "Document Reference"
-    },
-    "Audit Report Submitted":
-    {
-        jp: "監査レポートが提出された",
-        en: "Audit Report Submitted"
-    },
-    "Audit Report Rejected":
-    {
-        jp: "監査レポートがリジェクトされた",
-        en: "Audit Report Rejected"
-    },
-    "By":
-    {
-        jp: "よって",
-        en: "By"
-    },
-    "On":
-    {
-        jp: "関して",
-        en: "On"
-    },
-    "Audit Schedule Updated":
-    {
-        jp: "監査スケジュールが更新された",
-        en: "Audit Schedule Updated"
-    },
-    "Audit Report Accepted":
-    {
-        jp: "監査レポートが受理された",
-        en: "Audit Report Accepted"
-    }
-    ,
-    "Actions Submitted":
-    {
-        jp: "是正処置が提出された",
-        en: "Actions Submitted"
-    },
-    "Actions Accepted":
-    {
-        jp: "是正処置が受理された",
-        en: "Actions Accepted"
-    },
-    "Actions Rejected":
-    {
-        jp: "是正処置がリジェクトされた",
-        en: "Actions Rejected"
-    },
-    "Actions Rejected by Auditee":
-    {
-        jp: "是正処置がリジェクトされたよって受理された",
-        en: "Actions Rejected by Auditee"
-    },
-    "Actions Rejected by Auditor":
-    {
-        jp: "是正処置がリジェクトされたよって受理された",
-        en: "Actions Rejected by Auditor"
-    },
-    "Actions Accepted by Auditee":
-    {
-        jp: "是正処置が被監査人によって受理された",
-        en: "Actions Accepted by Auditee"
-    },
-    "Actions Accepted by Auditor":
-    {
-        jp: "是正処置が監査員によって受理された",
-        en: "Actions Accepted by Auditor"
-    },
-    "by":
-    {
-        jp: "よって",
-        en: "By"
-    },
-    "on":
-    {
-        jp: "関して",
-        en: "On"
-    },
-    "Accepted and Completed": {
-        jp: "了承済 そして 完了済",
-        en: "Accepted and Completed"
-    },
-    "Total":
-    {
-        jp: "合計",
-        en: "Total"
-    },
-    "January":
-    {
-        jp: "1月",
-        en: "January"
-    },
-    "February":
-    {
-        jp: "2月",
-        en: "February"
-    },
-    "March":
-    {
-        jp: "3月",
-        en: "March"
-    },
-    "April":
-    {
-        jp: "4月",
-        en: "April"
-    },
-    "May":
-    {
-        jp: "5月",
-        en: "May"
-    },
-    "June":
-    {
-        jp: "6月",
-        en: "July"
-    },
-    "July":
-    {
-        jp: "7月",
-        en: "July"
-    },
-    "August":
-    {
-        jp: "8月",
-        en: "August"
-    },
-    "September":
-    {
-        jp: "9月",
-        en: "September"
-    },
-    "October":
-    {
-        jp: "10月",
-        en: "October"
-    },
-    "November":
-    {
-        jp: "11月",
-        en: "November"
-    },
-    "December":
-    {
-        jp: "12月",
-        en: "December"
-    },
-    "Number of NC":
-    {
-        jp: "NC数（含むOFI)",
-        en: "Number of NC"
-    },
-    "User Manual":
-    {
-        jp: "'ユーザーマニュアル",
-        en: "User Manual"
-    },
-    "Auditor List": {
-        jp: "監査員 リスト",
-        en: "Auditor List"
+    "Cancel": {
+        jp: "キャンセル",
+        en: "Cancel"
     },
     "Delete": {
         jp: "削除",
         en: "Delete"
-    }
-    ,
-    "Are you sure you want to delete this scheduled audit?": {
-        jp: "このスケジュールされた監査を削除してもよろしいですか？",
-        en: "Are you sure you want to delete this scheduled audit?"
-    }
-    ,
-    "Cancel": {
-        jp: "キャンセル",
-        en: "Cancel"
-    }
-    ,
-    "Accepted and Completed": {
-        jp: "完了",
-        en: "Accepted and Completed"
-    }
-    ,
-    "Number of NC": {
-        jp: "NCの数",
-        en: "Number of NC"
     },
-    "Total": {
-        jp: "合計",
-        en: "Total"
+    "Problem Description": {
+        jp: "問題の説明",
+        en: "Problem Description"
     },
-    "First Name": {
-        jp: "名前",
-        en: "First Name"
+    "Containment Action": {
+        jp: "暫定処置",
+        en: "Containment Action"
     },
-    "Last Name": {
-        jp: "姓",
-        en: "Last Name"
-    },
-    "Short Id": {
-        jp: "ID",
-        en: "Short Id"
-    },
-    "Email Id": {
-        jp: "電子メールID",
-        en: "Email Id"
-    },
-    "Level": {
-        jp: "レベル",
-        en: "Level"
-    },
-    "Add New Auditor": {
-        jp: "新しい監査人を追加する",
-        en: "Add New Auditor"
-    },
-    "Add New Lead Auditor": {
-        jp: "新しい主任審査員の追加",
-        en: "Add New Lead Auditor"
-    },
-    "Are you sure you want to delete the auditor?": {
-        jp: "監査人を削除してもよろしいですか？",
-        en: "Are you sure you want to delete the auditor?"
-    },
-    "Auditor Added Successfully": {
-        jp: "リード監査役が正常に追加されました",
-        en: "Auditor Added Successfully"
-    },
-    "Auditor Updated Successfully": {
-        jp: "主任審査員が更新されました",
-        en: "Auditor Updated Successfully"
-    },
-    "Auditor Deleted Successfully": {
-        jp: "リード監査役が正常に削除された",
-        en: "Auditor Deleted Successfully"
-    },
-    "CAPA": {
-        jp: "是正処置・予防処置",
-        en: "CAPA"
-    },
-    "CAPA has been saved as Draft": {
-        jp: "是正処置・予防処置 下書きとして保存されました",
-        en: "CAPA has been saved as Draft"
-    },
-    "Audit Place": {
-        jp: "監査場所",
-        en: "Audit Place"
-    },
-    "Location": {
-        jp: "場所",
-        en: "Location"
-    },
-    "Audit Place/Location": {
-        jp: "監査場所",
-        en: "Audit Place/Location"
-    },
-    "Computer Skills": {
-        jp: "コンピュータのスキル",
-        en: "Computer Skills"
-    },
-    "Internal Audit Process": {
-        jp: "内部監査プロセス",
-        en: "Internal Audit Process"
-    },
-    "Core Tools": {
-        jp: "コアツール",
-        en: "Core Tools"
-    },
-    "Customer Specifie Requirements": {
-        jp: "顧客仕様の要件",
-        en: "Customer Specifie Requirements"
-    },
-    "IATF Rules 4th Edition": {
-        jp: "IATFルール第4版",
-        en: "IATF Rules 4th Edition"
-    },
-    "Secretariat Office Know how": {
-        jp: "事務局",
-        en: "Secretariat Office Know how"
-    },
-    "External Audit Planning": {
-        jp: "外部監査計画",
-        en: "External Audit Planning"
-    },
-    "Environmental Laws": {
-        jp: "環境法",
-        en: "Environmental Laws"
-    },
-    "Overall Competence": {
-        jp: "全体的な能力",
-        en: "Overall Competence"
-    },
-    "Quality Manual Know how": {
-        jp: "品質マニュアル",
-        en: "Quality Manual Know how"
-    },
-    "Action": {
-        jp: "アクション",
-        en: "Action"
-    },
-    "New Auditor List": {
-        jp: "新しい監査人リスト",
-        en: "New Auditor List"
-    },
-    "Confirm": {
-        jp: "確認する",
-        en: "Confirm"
-    },
-    "Audits Last Year": {
-        jp: "昨年の監査",
-        en: "Audits Last Year"
-    },
-    "Audits This Year": {
-        jp: "今年の監査",
-        en: "Audits This Year"
-    },
-    "Total Audit Hours": {
-        jp: "総監査時間",
-        en: "Total Audit Hours"
-    },
-    "View Area Audited": {
-        jp: "監査エリアを表示",
-        en: "View Area Audited"
-    },
-    "Areas Audited": {
-        jp: "監査対象地域",
-        en: "Areas Audited"
-    },
-
-    "Audit Result": {
-        jp: "工程監査結果",
-        en: "Audit Result"
-    },
-    "Summary": {
-        jp: "結果",
-        en: "Summary"
-    },
-    "Content Description": {
-        jp: "主な確認内容",
-        en: "Content Description"
-    },
-    "Category": {
-        jp: "区分",
-        en: "Category"
-    },
-    "Audit Item": {
-        jp: "監査項目",
-        en: "Audit Item"
-    },
-    "Rank": {
-        jp: "判定",
-        en: "Rank"
-    },
-
-    "Issue/Remarks": {
-        jp: "問題点・特記事項",
-        en: "Issue/Remarks"
-    },
-    "Issue Details": {
-        jp: "内容",
-        en: "Issue Details"
-    },
-    "Issues": {
-        jp: "指摘項目",
-        en: "Issues"
-    },
-
-    "Root Cause": {
-        jp: "発生原因",
-        en: "Root Cause"
+    "Root Cause Analysis": {
+        jp: "真の原因",
+        en: "Root Cause Analysis"
     },
     "Corrective Action": {
-        jp: "対策・改善実施内容",
+        jp: "是正処置",
         en: "Corrective Action"
     },
-    "Recurrence Prevention": {
-        jp: "再発防止策",
-        en: "Recurrence Prevention"
+    "Monitoring Effectiveness": {
+        jp: "有効性確認",
+        en: "Monitoring Effectiveness"
     },
-    "Implementation Date/Plan": {
-        jp: "実施日程・計画",
-        en: "Implementation Date/Plan"
-    } ,
-    "Audit Process": {
-        jp: "工程名",
-        en: "Audit Process"
-    },
-    "Audit Staff": {
-        jp: "監査スタッフ",
-        en: "Audit Staff"
-    },
-    "Trainee": {
-        jp: "研修生",
-        en:"Trainee"
-    },
-    "Audit Support": {
-        jp: "監査者",
-        en: "Audit Support"
-    },
-    "Priority": {
-        jp: "ランク",
-        en: "Priority"
-    },
-    "Priority A": {
-        jp: "ランク A",
-        en: "Priority A"
-    },
-    "Priority B": {
-        jp: "ランク B",
-        en: "Priority B"
-    },
-    "Priority C": {
-        jp: "ランク C",
-        en: "Priority C"
-    },
-    "Priority D": {
-        jp: "ランク D",
-        en: "Priority D"
-    },
-    "Issue No": {
-        jp: "指摘 No",
-        en: "Issue No"
+    "Action Date": {
+        jp: "実施（予定）日",
+        en: "Action Date"
     },
     "Attachments": {
         jp: "添付",
         en: "Attachments"
     },
-    "Documentation Update Necessity": {
-        jp: "関連書類の改訂可否",
-        en: "Documentation Update Necessity"
+    "Plan Date": {
+        jp: "実施（予定）日",
+        en: "Plan Date"
     },
-    "(eg. Control Plan/PFMEA/Work instructions/etc.)": {
-        jp: "（例：コントロールプラン、PFMEA、作業標準等）",
-        en: "(eg. Control Plan/PFMEA/Work instructions/etc.)"
+    "Implementation VIN No": {
+        jp: "実施号機",
+        en: "Implementation VIN No"
     },
-    "Issue": {
-        jp: "指摘",
-        en: "Issue"
+    "Implementation VIN/Prod. Iden. No.": {
+        jp: "実装VIN / Prod. Iden. いいえ.",
+        en: "Implementation VIN/Prod. Iden. No."
     },
-    //"Process Audit - Regular": {
-    //    jp: "定期工程監査",
-    //    en:"Process Audit - Regular"
-    //},
-    //"Process Audit - Extraordinary": {
-    //    jp: "臨時工程監査",
-    //    en:"Process Audit - Extraordinary"
-    //},
+    "Start Date": {
+        jp: "確認開始日",
+        en: "Start Date"
+    },
+    "IAR Rejection": {
+        jp: "IAR拒否",
+        en: "IAR Rejection"
+    },
+    "Rejection Comments": {
+        jp: "拒否コメント",
+        en: "Rejection Comments"
+    },
+    "ReOpen Confirmation": {
+        jp: "再確認の確認",
+        en: "ReOpen Confirmation"
+    },
+    "Are you sure? Want to ReOpen this Issue?": {
+        jp: "本気ですか？ この問題を再開したいですか？",
+        en: "Are you sure? Want to ReOpen this Issue?"
+    },
+    "No": {
+        jp: "いいえ",
+        en: "No"
+    },
+    "Yes": {
+        jp: "はい",
+        en: "Yes"
+    },
+    "Current Status": {
+        jp: "現在のステータス",
+        en: "Current Status"
+    },
+    "Registered IAR": {
+        jp: "登録されたIAR",
+        en: "Registered IAR"
+    },
+    "Open": {
+        jp: "開いた",
+        en: "Open"
+    },
+    "Implementation": {
+        jp: "実装",
+        en: "Implementation"
+    },
+    "Monitoring": {
+        jp: "モニタリング",
+        en: "Monitoring"
+    },
+    "Closed": {
+        jp: "閉館",
+        en: "Closed"
+    },
+    "Closure": {
+        jp: "閉鎖",
+        en: "Closure"
+    },
+    "Concern Details": {
+        jp: "懸念事項",
+        en: "Concern Details"
+    },
+    "Actions": {
+        jp: "行動",
+        en: "Actions"
+    },
+    "History": {
+        jp: "歴史",
+        en: "History"
+    },
+    "ReOpen": {
+        jp: "再オープン",
+        en: "ReOpen"
+    },
+    "Move To Monitoring": {
+        jp: "モニタリングに移動",
+        en: "Move To Monitoring"
+    },
+    "Expected Closure Date": {
+        jp: "予想終了日",
+        en: "Expected Closure Date"
+    },
+    "Containment Action History": {
+        jp: "封じ込め行動の歴史",
+        en: "Containment Action History"
+    },
+    "Root Cause Analysis History": {
+        jp: "根本原因分析の履歴",
+        en: "Root Cause Analysis History"
+    },
+    "Corrective Action History": {
+        jp: "是正措置の歴史",
+        en: "Corrective Action History"
+    },
+    "Monitoring Effectiveness History": {
+        jp: "有効性履歴の監視",
+        en: "Monitoring Effectiveness History"
+    },
+    "Remarks History": {
+        jp: "備考歴史",
+        en: "Remarks History"
+    },
+    "Observations": {
+        jp: "観察",
+        en: "Observations"
+    },
+    "Save As Draft": {
+        jp: "下書きとして保存",
+        en: "Save As Draft"
+    },
+    "Project Master": {
+        jp: "プロジェクトマスター",
+        en: "Project&nbsp;Master"
+    },
+    "Production Stage Master": {
+        jp: "生産ステージマスター",
+        en: "Production Stage Master"
+    },
+    "Add Project": {
+        jp: "プロジェクトを追加",
+        en: "Add Project"
+    },
+    "Action": {
+        jp: "アクション",
+        en: "Action"
+    },
+    "Add Production Stage": {
+        jp: "プロダクションステージを追加",
+        en: "Add Production Stage"
+    },
+    "QFL Type Master": {
+        jp: "QFLタイプマスター",
+        en: "QFL Type Master"
+    },
+    "Add QFL Type": {
+        jp: "QFLタイプを追加",
+        en: "Add QFL Type"
+    },
+    "Production Stage Name": {
+        jp: "生産段階名",
+        en: "Production Stage Name"
+    },
+    "Add Quality Gate": {
+        jp: "品質ゲートを追加",
+        en: "Add Quality Gate"
+    },
+    "Quality Gate Master": {
+        jp: "品質ゲートマスター",
+        en: "Quality Gate Master"
+    },
+    "Customer Impact Master": {
+        jp: "カスタマーインパクトマスター",
+        en: "Customer Impact Master"
+    },
+    "Add Customer Impact": {
+        jp: "顧客への影響を加える",
+        en: "Add Customer Impact"
+    },
+    "Add Defect Category": {
+        jp: "欠陥カテゴリを追加する",
+        en: "Add Defect Category"
+    },
+    "Defect Category Master": {
+        jp: "欠陥カテゴリマスター",
+        en: "Defect Category Master"
+    },
+    "Add Defect Source": {
+        jp: "欠陥ソースを追加する",
+        en: "Add Defect Source"
+    },
+    "Defect Source Master": {
+        jp: "欠陥源マスタ",
+        en: "Defect Source Master"
+    },
+    "Add IRA Responsible": {
+        jp: "責任あるIRAを追加",
+        en: "Add IRA Responsible"
+    },
+    "IRA Responsible Master": {
+        jp: "IRA責任マスター",
+        en: "IRA Responsible Master"
+    },
+    "Vehicle Type Master": {
+        jp: "車両タイプマスター",
+        en: "Vehicle Type Master"
+    },
+    "Vehicle Type": {
+        jp: "車種",
+        en: "Vehicle Type"
+    },
+    "Add Vehicle Type": {
+        jp: "車両タイプを追加",
+        en: "Add Vehicle Type"
+    },
+    "Add Variant": {
+        jp: "バリアントの追加",
+        en: "Add Variant"
+    },
+    "Add Model": {
+        jp: "モデルを追加する",
+        en: "Add Model"
+    },
+    "Model": {
+        jp: "モデル",
+        en: "Model"
+    },
+    "Model Master": {
+        jp: "モデルマスター",
+        en: "Model Master"
+    },
+    "Variant Master": {
+        jp: "バリアントマスター",
+        en: "Variant Master"
+    },
+    "Parts Master": {
+        jp: "パーツマスター",
+        en: "Parts Master"
+    },
+    "Add Parts": {
+        jp: "パーツを追加する",
+        en: "Add Parts"
+    },
+    "Parts Number": {
+        jp: "部品番号",
+        en: "Parts Number"
+    },
+    "Parts Name": {
+        jp: "部品名",
+        en: "Parts Name"
+    },
+    "Supplier Master": {
+        jp: "サプライヤーマスター",
+        en: "Supplier Master"
+    },
+    "Add Supplier": {
+        jp: "サプライヤを追加",
+        en: "Add Supplier"
+    },
+    "Supplier Code": {
+        jp: "サプライヤコード",
+        en: "Supplier Code"
+    },
+    "Project": {
+        jp: "プロジェクト",
+        en: "Project"
+    },
+    "Issue Status": {
+        jp: "問題のステータス",
+        en: "Issue Status"
+    },
+    "Overdue Issues": {
+        jp: "延滞問題",
+        en: "Overdue Issues"
+    },
+    "Issue Resolution Status": {
+        jp: "問題の解決状況",
+        en: "Issue Resolution Status"
+    },
+    "Issue Closure Forecasting": {
+        jp: "問題のクロージャ予測",
+        en: "Issue Closure Forecasting"
+    },
+    "Projects": {
+        jp: "プロジェクト",
+        en: "Projects"
+    },
+    "From": {
+        jp: "から",
+        en: "From"
+    },
+    "To": {
+        jp: "に",
+        en: "To"
+    },
+    "Overdue Issues": {
+        jp: "延滞問題",
+        en: "Overdue Issues"
+    },
+    "Issue Resolution Status Report": {
+        jp: "問題解決ステータスレポート",
+        en: "Issue Resolution Status Report"
+    },
+    "Total number of Active Issues - All Issues": {
+        jp: "アクティブな問題の総数 - すべての問題",
+        en: "Total number of Active Issues - All Issues"
+    },
+    "Issues Raised in given period": {
+        jp: "一定期間内に提起された問題",
+        en: "Issues Raised in given period"
+    },
+    "Issues Closed in given period": {
+        jp: "一定期間内に終了した問題",
+        en: "Issues Closed in given period"
+    },
+    "All Open Issues ageing by functions": {
+        jp: "すべての未解決の問題",
+        en: "All Open Issues ageing by functions"
+    },
+    "All Open Issues ageing by Priority": {
+        jp: "すべての未解決の問題優先度によるエージング",
+        en: "All Open Issues ageing by Priority"
+    },
+    "Change": {
+        jp: "変化する",
+        en: "Change"
+    },
+    "Issue Closure - Forecasting": {
+        jp: "問題のクロージャ - 予測",
+        en: "Issue Closure - Forecasting"
+    },
+    "Actual Closed": {
+        jp: "実際の休業日",
+        en: "Actual Closed"
+    },
+    "Planned Closure": {
+        jp: "計画的閉鎖",
+        en: "Planned Closure"
+    },
+    "Please Fill All Mandatorily Fields before Moving to Implementation": {
+        jp: "計画的閉鎖",
+        en: "実装に移る前にすべての必須フィールドを入力してください"
+    },
+    "Please Fill Rejection Comments Fields before Rejecting IAR": {
+        jp: "IARを拒否する前に拒否コメントフィールドに記入してください",
+        en: "Please Fill Rejection Comments Fields before Rejecting IAR"
+    },
+    "Please Fill All Mandatorily Fields before Moving to Monitoring": {
+        jp: "モニタリングに移行する前にすべての必須フィールドを入力してください",
+        en: "Please Fill All Mandatorily Fields before Moving to Monitoring"
+    },
+    "Actions Accepted and Issue has been Moved to Implementation": {
+        jp: "承認されたアクションと問題は実装に移されました",
+        en: "Actions Accepted and Issue has been Moved to Implementation"
+    },
+    "Issue has been Moved to Monitoring": {
+        jp: "問題が監視に移動されました",
+        en: "Issue has been Moved to Monitoring"
+    },
+    "Issue has been Moved to Closed": {
+        jp: "問題は閉鎖に移行しました",
+        en: "Issue has been Moved to Closed"
+    },
+    "Issue has been ReOpned Successfully": {
+        jp: "問題が再開されました。",
+        en: "Issue has been ReOpned Successfully"
+    },
+    "Issue has been Updated Successfully": {
+        jp: "問題が正常に更新されました",
+        en: "Issue has been Updated Successfully"
+    },
+    "Error Processing": {
+        jp: "エラー処理",
+        en: "Error Processing"
+    },
+    "Product Audit Daily Report": {
+        jp: "製品監査日報",
+        en: "Product Audit Daily Report"
+    },
+    "Responsible": {
+        jp: "責任ある",
+        en: "Responsible"
+    },
+    "Category": {
+        jp: "カテゴリー",
+        en: "Category"
+    },
+    "Classification": {
+        jp: "分類",
+        en: "Classification"
+    },
+    "Total": {
+        jp: "合計",
+        en: "Total"
+    },
+    "Total YTD": {
+        jp: "YTDの合計",
+        en: "Total YTD"
+    },
+    "Number of Overdue Issues": {
+        jp: "延滞問題の数",
+        en: "Number of Overdue Issues"
+    },
+    "Issues Due with ": {
+        jp: "問題の原因 ",
+        en: "Issues Due with "
+    },
+    "Overdue Issues ": {
+        jp: "延滞問題 ",
+        en: "Overdue Issues "
+    },
+    "Construction Group": {
+        jp: "建設グループ",
+        en: "Construction Group"
+    },
+    "Damage Part Location": {
+        jp: "ダメージパーツの場所",
+        en: "Damage Part Location"
+    },
+    "Fault Type": {
+        jp: "フォルトタイプ",
+        en: "Fault Type"
+    },
+    "Damage Code Results": {
+        jp: "損害コード結果",
+        en: "Damage Code Results"
+    },
+    "Damage Code Description": {
+        jp: "損害コードの説明",
+        en: "Damage Code Description"
+    },
+    "Damage Code Generated": {
+        jp: "生成されたダメージコード",
+        en: "Damage Code Generated"
+    },
+    "Issue Resolution Status (Priority Wise) Report": {
+        jp: "問題解決ステータス（優先順位別）レポート",
+        en: "Issue Resolution Status (Priority Wise) Report"
+    },
+    "'A' Open Issues ageing by functions": {
+        jp: "'A'未解決の問題関数によるエージング",
+        en: "'A' Open Issues ageing by functions"
+    },
+    "'B' Open Issues ageing by functions": {
+        jp: "'B'オープンな問題関数によるエージング",
+        en: "'B' Open Issues ageing by functions"
+    },
+    "'C' Open Issues ageing by functions": {
+        jp: "'C'オープンな問題関数によるエージング",
+        en: "'C' Open Issues ageing by functions"
+    },
+    "'D' Open Issues ageing by functions": {
+        jp: "'D'オープンな問題関数によるエージング",
+        en: "'D' Open Issues ageing by functions"
+    },
+    "Issue Resolution Status - Priority Wise": {
+        jp: "問題解決ステータス - 優先順位別",
+        en: "Issue Resolution Status - Priority Wise"
+    },
+    "Alert Notification": {
+        jp: "アラート通知",
+        en: "Alert Notification"
+    },
+    "Type": {
+        jp: "タイプ",
+        en: "Type"
+    },
+    "Overall Issues": {
+        jp: "全体的な問題",
+        en: "Overall Issues"
+    },
+    "Average Run Time in Days": {
+        jp: "平均実行時間（日）",
+        en: "Average Run Time in Days"
+    },
+    "Total No. of Active Issues": {
+        jp: "アクティブな問題の総数",
+        en: "Total No. of Active Issues"
+    },
+    "TPRS (Total Problem Resolution Speed) = Average(Issue moved to monitoring - Issue Registered)": {
+        jp: "TPRS (合計問題解決速度) = 平均（モニタリングに移った問題 - 登録された問題）",
+        en: "TPRS (Total Problem Resolution Speed) = Average(Issue moved to monitoring - Issue Registered)"
+    },
+    "Average Runtime in days = Average(Issue Closure Date - Issue Registered)": {
+        jp: "平均ランタイム（日数=平均）（発行日 - 発行登録）",
+        en: "Average Runtime in days = Average(Issue Closure Date - Issue Registered)"
+    },
+    "Resolution Time": {
+        jp: "解決時間",
+        en: "Resolution Time"
+    },
+    "You do not have required access rights to use this tool! Please contact Administrator for further assistance": {
+        jp: "このツールを使用するために必要なアクセス権がありません！ 詳細については管理者にお問い合わせください",
+        en: "You do not have required access rights to use this tool! Please contact Administrator for further assistance"
+    },
+    "Quality Gate for Auto QFL": {
+        jp: "自動QFL用品質ゲート",
+        en: "Quality Gate for Auto QFL"
+    },
+    "Production Date of Vehicle": {
+        jp: "製造年月",
+        en: "Production Date of Vehicle"
+    },
+    "Vehicle Model": {
+        jp: "型式",
+        en: "Vehicle Model"
+    },
+    "Vehicle Number": {
+        jp: "車番",
+        en: "Vehicle Number"
+    },
+    "Production Number": {
+        jp: "工事番号",
+        en: "Production Number"
+    },
+    "Parts Received": {
+        jp: "納入数",
+        en: "Parts Received"
+    },
+    "Supply Code": {
+        jp: "納入コード",
+        en: "Supply Code"
+    },
+    "Notify to": {
+        jp: "通知先",
+        en: "Notify to"
+    },
+    "PQR No": {
+        jp: "PQRいいえ",
+        en: "PQR No"
+    },
+    "Shop / Line / Project Master": {
+        jp: "ショップ/ライン/プロジェクトマスター",
+        en: "Shop / Line / Project Master"
+    },
+    "Vehicle/Product Type Master": {
+        jp: "車両/製品タイプマスター",
+        en: "Vehicle/Product Type Master"
+    },
+    "Supplier Name Master": {
+        jp: "サプライヤ名マスタ",
+        en: "Supplier Name Master"
+    },
+    "Responsible Department Master": {
+        jp: "責任ある部長",
+        en: "Responsible Department Master"
+    },
+    "Add Responsible Department": {
+        jp: "担当部門を追加",
+        en: "Add Responsible Department"
+    },
+    "Under Implementation": {
+        jp: "実装中",
+        en: "Under Implementation"
+    },
+    "Product Audit Summary": {
+        jp: "製品監査サマリー",
+        en: "Product Audit Summary"
+    },
+    "Month wise overall DPU Trend": {
+        jp: "DPUの全体的なトレンド",
+        en: "Month wise overall DPU Trend"
+    },
+    "Product Audit YTD": {
+        jp: "製品監査YTD",
+        en: "Product Audit YTD"
+    },
+    "All": {
+        jp: "すべて",
+        en: "All"
+    },
+    "Delete Confirmation": {
+        jp: "確認の削除",
+        en: "Delete Confirmation"
+    },
+    "Need Reason for Delete": {
+        jp: "削除の理由が必要",
+        en: "Need Reason for Delete"
+    },
+    "Short Description": {
+        jp: "簡単な説明",
+        en: "Short Description"
+    }
 }
-
-
-
-
-
-
 
 $(document).ready(function () {
 
+    //LayoutPopupDropdown();//Common Plant Dropdown
+    $(':input').on('focus', function () {
+        $(this).attr('autocomplete', 'off');
+    });
     Tooltips(); // Tooltip
-    overallTableScroll(); //overallTableScroll
-
-
+    ConcernPage();
+    EditConcernDetails();
     $('.Languagepicker').selectpicker();
 
-
     $('.Languagepicker').on('change', function (ev) {
+
         var selected = $(this).find("option:selected").val();
+
         var ApiFunc = '../Home/LanguageChanger/';
 
         var input = JSON.stringify({ "input": selected });
 
-        JsonPostMethod(ApiFunc, input, '', function (data) {
+        PostMethod(ApiFunc, input, '', function (data) {
 
+            UserDetails.language = data.language;
             Conversion(selected);
             ev.preventDefault();
         });
 
+    });
+    if (!alertify.myAlert) {
+        //define a new dialog
+        alertify.dialog('myAlert', function () {
+            return {
+                main: function (message, header) {
+                    this.message = message;
+                    $('#alertheader').text(header);
+                },
+                setup: function () {
+                    return {
+                        buttons: [{ text: "OK" }],
+                        focus: { element: 0 }
+                    };
+                },
+                prepare: function () {
+                    this.setContent(this.message);
+                }
+            }
+        });
+    }
+    //For Multiple trn - Values will not reset in the page
+    //$('.removemultipletrn').multipleSelect({
+    //    filter: true,
+    //    single: false,
+    //    placeholder: "Select",
+    //    onClick: function (view) {
+    //        var text = $(".removemultipletrn").find('button').find('span');
+    //        if (text.text() != "Select") {
+    //            $(text).removeAttr("data-trn-key");
+    //        }
+    //        else if(text.text()== "All selected")
+    //        {
+    //            $(text).attr("data-trn-key", "All selected");
+    //        }
+    //        else {
+    //            $(text).attr("data-trn-key", "Select");
+    //        }
+    //    },
+    //    onUncheckAll: function () {
+    //        var text = $(".removemultipletrn").find('button').find('span');
+    //        $(text).attr("data-trn-key", "Select");
+    //    },
+    //    onCheckAll: function () {
+    //        var text = $(".removemultipletrn").find('button').find('span');
+    //        $(text).attr("data-trn-key", "All selected");
+    //    },
+    //    width: "100%",
+    //    onClose: function () {
+    //    }
+    //});
 
+    //For Single trn - Values will not reset in the page
+    //$('.removesingletrn').multipleSelect({
+    //    filter: true,
+    //    single: true,
+    //    placeholder: "Select",
+    //    onClick: function (view) {
+    //        var text = $(".removesingletrn").find('button').find('span');
+    //        if (text.text() != "Select") {
+    //            $(text).removeAttr("data-trn-key");
+    //        }
+    //        else {
+    //            $(text).attr("data-trn-key", "Select");
+    //        }
+    //    },
+    //    width: "100%",
+    //    onClose: function () {
+    //    }
+    //});
+
+    //$('body').on('click', '.removesingletrn div button', function () {
+    //    var text = $(".removesingletrn div button").find('span');
+    //    if (text.text() != "Select") {
+    //        $(text).removeAttr("data-trn-key");
+    //    }
+    //    else {
+    //        $(text).attr("data-trn-key", "Select");
+    //    }
+    //});
+
+    $('.plant_master').on('change', function (ev) {
+       
+        UserDetails.selectedplant = $("#sddlplantMaster").val();
+        CommonPlantBasedDropdowns($("#sddlplantMaster").val());
     });
 
     var qs = getQueryStrings();
@@ -1438,8 +1161,8 @@ $(document).ready(function () {
     if (myParam != null && myParam != undefined && selected != null && selected != '') {
         $('.Languagepicker').selectpicker('val', myParam);
         Conversion(myParam);
-    }
 
+    }
 
 });
 
@@ -1448,7 +1171,23 @@ $(document).ready(function () {
 function Conversion(ln) {
 
     var translator = $('#lBody').translate({ lang: ln, t: dict });
+    //Translate export to excel and ppt download
+    $("#lnkexcel").removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $("#lnkexcel").attr("data-original-title", "Excelにエクスポート") : $("#lnkexcel").attr("data-original-title", "Export to Excel");
+    $('.ppt').removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $('.ppt').attr("data-original-title", "PPTダウンロード") : $('.ppt').attr("data-original-title", "PPT Download");
+    $("#deleteiar").removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $("#deleteiar").attr("data-original-title", "懸念を削除") : $("#deleteiar").attr("data-original-title", "Delete Concern");
+    $("#deleteaudit").removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $("#deleteaudit").attr("data-original-title", "VIN監査を削除") : $("#deleteaudit").attr("data-original-title", "Delete Audit VIN");
+    $('#btnDownloadPDF').removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $("#btnDownloadPDF").attr("data-original-title", "PDFにエクスポート") : $("#btnDownloadPDF").attr("data-original-title", "Export to PDF");
+    $('#pptdownload').removeAttr('title')
+    $('.Languagepicker').val() != "en" ? $("#pptdownload").attr("data-original-title", "PDFにエクスポート") : $("#pptdownload").attr("data-original-title", "PPT Download");
+     
 }
+
+
 
 // Shrink Table
 function ShrinkTable() {
@@ -1458,10 +1197,8 @@ function ShrinkTable() {
 }
 
 // Close minizined table
-
 function CloseEditSchedule() {
 
-    window.history.pushState("object or string", "Title", "?" + "auditrefno=No");
     $(".tblsmall").removeClass("tableMinimized col-lg-3");
     $('[data-label]').css('display', '');
     $('[data-minilabel]').css('display', '');
@@ -1469,28 +1206,9 @@ function CloseEditSchedule() {
     $("tr").removeClass("activegrey");
     $("body").removeClass("bodyoveflow");
     overallTableScrollCustomized();
-
-
-  $(".tableshrink").addClass("table-word-break");
-    $('.tableshrink tr td:first-child').attr('style', 'width: 6% !important');
-
-    $('.tableshrink1 tr td:nth-child(6)').attr('style', 'width: 2% !important');
-    $('.tableshrink1 tr td:nth-child(7)').attr('style', 'width: 2% !important');
-    $('.tableshrink1 tr td:nth-child(8)').attr('style', 'width: 2% !important');
-    $('.tableshrink tr td:nth-child(9)').attr('style', 'width: 2% !important');
-    $('.tableshrink1 tr td:nth-child(10)').attr('style', 'width: 2% !important');
-
-
-    $('.tableshrink2 tr td:nth-child(10)').attr('style', 'width: 2% !important');
-
-    pagenation = "";
-    $(".removetd").css('display', '');
-   
-  CustomscrollBar();
 }
 
 // Dynamic Page scroll 
-
 function resizeContent() {
 
     $(".tableMinimized,.smalltbleditablecontent").mCustomScrollbar({
@@ -1515,30 +1233,9 @@ function resizeContent() {
 
 //overall table tab scroll
 
-function overallTableScroll() {
+function EditConcernDetails() {
 
-    $(".tblsmall").mCustomScrollbar({
-
-        scrollbarPosition: "outside",
-        theme: "minimal-dark",
-
-        callbacks: {
-            onScroll: function () {
-                openSelect($(".js-example-tags"));
-                openSelect($(".js-example-tags"));
-
-            }
-        }
-    });
-    $height = $(window).height() - 320;
-
-    $(".tblsmall ").height($height);
-
-}
-
-function overallTableScrollCustomized() {
-
-    $(".tblsmall").mCustomScrollbar({
+    $(".EditConcern, .AuditCreateConcern").mCustomScrollbar({
 
         scrollbarPosition: "outside",
         theme: "minimal-dark",
@@ -1551,13 +1248,32 @@ function overallTableScrollCustomized() {
             }
         }
     });
-    $height = $(window).height() - 330;
+    $height = $(window).height() - 220;
 
-    $(".tblsmall ").height($height);
+    $(".EditConcern, .AuditCreateConcern").height($height);
 
 }
 
+function ConcernPage() {
 
+    $(".ConcernPage").mCustomScrollbar({
+
+        scrollbarPosition: "outside",
+        theme: "minimal-dark",
+
+        callbacks: {
+            onScroll: function () {
+                openSelect($(".js-example-tags"));
+                openSelect($(".js-example-tags"));
+
+            }
+        }
+    });
+    $height = $(window).height() - 340;
+
+    $(".ConcernPage").height($height);
+
+}
 
 // Tooltips
 function Tooltips() {
@@ -1572,35 +1288,32 @@ function Tooltips() {
 
 }
 
-
-
-
+function DatatableFooterTranslater(id) {
+    $('#' + id + '_info').translate({ lang: $('.Languagepicker').val(), t: dict });
+    $('#' + id + '_paginate').translate({ lang: $('.Languagepicker').val(), t: dict });
+}
 
 //MenuRemoveClass
-
 function MenuRemoveClass() {
-    $("#AuditTrackerMenu").removeClass("active");
-    $("#AuditschedulingMenu").removeClass("active");
-    $("#AuditReportingMenu").removeClass("active");
-    $("#AuditAuditorMenu").removeClass("active");
-    $("#AuditAuditeeMenu").removeClass("active");
-    $("#AuditReviewMenu").removeClass("active");
-    $("#AuditReviewCAPAMenu").removeClass("active");
-    $("#AuditReviewAuditorMenu").removeClass("active");
-    $("#AuditReviewAuditeeMenu").removeClass("active");
-    $("#AuditReviewFollowupMenu").removeClass("active");
-    $("#AuditAnalysisMenu").removeClass("active");
+    $("#RequestTracker").removeClass("active");
+    $("#Masters").removeClass("active");
+    $("#CreateRequestMenu").removeClass("active");
+    $("#CreateComplaintMenu").removeClass("active");
+    $("#Analysis").removeClass("active");
+    $("#MatLab").removeClass("active");
+    $("#MeasureLab").removeClass("active");    
 
 }
 
+//Generate guid
 function guid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+      .toString(16)
+      .substring(1);
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
+    s4() + '-' + s4() + s4() + s4();
 }
 
 function CheckFileType(filename) {
@@ -1612,7 +1325,7 @@ function CheckFileType(filename) {
     else if (ext == "xls" || ext == "xlsx" || ext == "csv") {
         Filetype = "excel.png";
     }
-    else if (ext == "jpg" || ext == "jpeg" || ext == "png" || ext == "svg") {
+    else if (ext == "jpg" || ext == "jpeg" || ext == "png" || ext == "svg" || ext == "JPG" || ext == "JPEG" || ext == "PNG" || ext == "SVG") {
         Filetype = "image.png";
     }
     else if (ext == "doc" || ext == "docx") {
@@ -1656,29 +1369,184 @@ function openSelect(obj) {
     }
 }
 
-function PanelStatus(data) {
-    $('#Stage1').removeClass('current');
-    $('#Stage2').removeClass('current');
-    $('#Stage3').removeClass('current');
-    $('#Stage4').removeClass('current');
-    $('#' + data).addClass('current');
-}
+function LayoutPlantDropdownFill(UserDetails) {
 
-function DownloadManuals() {
-    var filepath, name;
+    //var sddlplant = [];
 
-    if ($('.Languagepicker').val() == "en") {
-        filepath = 'D:\\DTAQMPortal Folder\\Files\\Manual\\DTA QM-IAT Manual v01(E).pdf';
-        name = 'DTA QM-IAT Manual v01(E).pdf';
-        window.location.href = '../Home/DownloadFile?url=' + filepath + '&filename=' + name + ''
+    //$("#sddlplantMaster").empty();
+    //var optionhtml1 = '<option value="' + '0' + '" selected>' + "Select" + '</option>';
+    //sddlplant.push(optionhtml1);
+    //var $dropdown = $("#sddlplantMaster");
+    //$.each(UserDetails.plantlist, function (i, item) {
+    //    var optionhtml = '<option value="' + item.plantid + '">' + item.plantname + '</option>';
+    //    sddlplant.push(optionhtml);
+    //});
+    //$("#sddlplantMaster").append(sddlplant.join(' ')).multipleSelect("refresh");
+    //$('#AsddlplantMaster').css('border', '1px solid #ccc');
 
-    }
-    else if ($('.Languagepicker').val() == "jp") {
-        filepath = 'D:\\DTAQMPortal Folder\\Files\\Manual\\DTA QM-IAT Manual v01(J).pdf';
-        name = 'DTA QM-IAT Manual v01(J).pdf';
-        window.location.href = '../Home/DownloadFile?url=' + filepath + '&filename=' + name + ''
+    //if (UserDetails.plantlist != null && UserDetails.plantlist.length == 1) {
+    //    $("#sddlplantMaster").multipleSelect("setSelects", [UserDetails.plantlist[0].plantid.toString()]);
+    //    $("#AsddlplantMaster").val(UserDetails.plantlist[0].plantid.toString());
+    //    $("#AsddlplantMaster").attr('disabled', 'disabled');
+    //    UserDetails.selectedplant = UserDetails.plantlist[0].plantid.toString();
+    //}
+    //else {
+    //    if (UserDetails.selectedplant != null && UserDetails.selectedplant != 0) {
 
+    //        $("#sddlplantMaster").multipleSelect("setSelects", [UserDetails.selectedplant.toString()]);
+    //        $("#AsddlplantMaster").val(UserDetails.selectedplant.toString());
+    //    }
+    //}
+
+    var sddlplant = [];
+
+    $("#sddlplantMaster").empty();
+    var optionhtml1 = '<option value="' + '0' + '" selected>' + "All" + '</option>';
+    sddlplant.push(optionhtml1);
+    $.each(UserDetails.plantlist, function (i, item) {
+        var optionhtml = '<option value="' + item.plantid + '" >' + item.plantname + '</option>';
+        sddlplant.push(optionhtml);
+    });
+    $("#sddlplantMaster").append(sddlplant);
+
+    if (UserDetails.plantlist != null && UserDetails.plantlist.length == 1) {//if user only single plant
+        $("#sddlplantMaster").val(UserDetails.plantlist[0].plantid.toString());
+        $('#sddlplantMaster').selectpicker('refresh');//Need to Refresh as we are using bootstrap select picker
+        $("#sddlplantMaster").attr('disabled', 'disabled');
+        UserDetails.selectedplant = UserDetails.plantlist[0].plantid.toString();
     }
     else {
+        if (UserDetails.selectedplant != null && UserDetails.selectedplant != 0) {//if user had already selected plant
+
+            $("#sddlplantMaster").val(UserDetails.selectedplant.toString());
+            $('#sddlplantMaster').selectpicker('refresh');
+        }
+        else if (UserDetails.plantlist.length > 1)//if user have multiple plants
+        {
+            $("#sddlplantMaster").val("0");
+            $('#sddlplantMaster').selectpicker('refresh');
+        }
     }
 }
+
+function LayoutPopupDropdown() {
+    //Plant
+    $('#sddlplantMaster').multipleSelect({
+        filter: true,
+        single: true,
+        placeholder: "Select",
+        onClick: function (view) {
+
+            if (view.value != "0") {
+                $('#AsddlplantMaster').val(view.value);
+            }
+            else {
+                $('#AsddlplantMaster').val('');
+            }
+            if (view.value != '') {
+                $('#AsddlplantMaster').css('border', '1px solid #ccc');
+            }
+            else {
+                $('#AsddlplantMaster').css('border', '1px solid red');
+            }
+            CommonPlantBasedDropdowns(view.value);
+        },
+        width: "54%",
+        onClose: function () {
+        }
+    });
+}
+//var commonplantid = 0;
+//function CommonPlantBasedDropdowns(plantid) {
+//    //
+//    //var ApiFunc = '../Home/CommonPlantIdBind/';
+
+//    //var input = JSON.stringify({ "input": plantid });
+
+//    //PostMethod(ApiFunc, input, '', function (data) {
+//    //    
+//    //    var id = data;
+//    //    $("#sddlplantMaster").multipleSelect("setSelects", "575");
+//    //    $("#AsddlplantMaster").val("575");
+//    //});
+//}
+function navigate(target) {
+
+    //Grab your values
+    if (target == 'QMIssueTracker') {
+        var url = '../Home/' + target;
+    }
+    else if (target == 'AuditTracker') {
+        var url = '../Home/' + target;
+    }
+    else if (target == 'CreateConcern') {
+        var url = '../Home/' + target;
+    }
+    else if (target == 'AuditObservation') {
+        var url = '../Home/' + target;
+    }
+    else if (target == 'OverdueIssueClosure') {
+        var url = '../Analysis/' + target;
+    }
+    else if (target == 'IssueResolutionStatus') {
+        var url = '../Analysis/' + target;
+    }
+    else if (target == 'IRSPriorityWise') {
+        var url = '../Analysis/' + target;
+    }
+    else if (target == 'IssueClosureForeCasting') {
+        var url = '../Analysis/' + target;
+    }
+    else if (target == 'ResolutionTime') {
+        var url = '../Analysis/' + target;
+    }
+    else if (target == 'ProductAuditYTD') {
+        var url = '../Analysis/' + target;
+    }
+
+    else if (target == 'ProjectMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'ProductionStageMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'QFLTypeMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'QGateMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'CustomerImpactMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'DefectSourceMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'DefectCategoryMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'IRAResponsibleMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'VehicleTypeMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'ModelMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'PartsMaster') {
+        var url = '../Master/' + target;
+    }
+    else if (target == 'SupplierMaster') {
+        var url = '../Master/' + target;
+    }
+
+    //Perform your navigation
+    //var selectedplant = $("#sddlplantMaster").multipleSelect("getSelects", "value")[0];
+    //window.location.href = url + '?plantid=' + selectedplant;
+
+    var selectedplant = $("#sddlplantMaster").val();
+    window.location.href = url + '?plantid=' + selectedplant;
+}
+
+

@@ -371,7 +371,7 @@ table.dataTable td {
 	float: left;
 	padding-top: 1.7em;
 	padding-left:2%;
-	padding-top:; /*table dropdown issue fix 0.755em;*/
+	/*0.755em table dropdown issue*/
 }
 
 .dataTables_wrapper .dataTables_paginate {
