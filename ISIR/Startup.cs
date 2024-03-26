@@ -1,3 +1,5 @@
+using ISIR.Services;
+using ISIR.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +44,12 @@ namespace ISIR
             {
                 options.Level = CompressionLevel.Optimal;
             });
+
+            services.AddScoped<ILabRequest, LabRequest>();
+            //services.AddHttpClient<ILabRequest, LabRequest>(c =>
+            //c.BaseAddress = new Uri("https://localhost:7220/"));
+            services.AddHttpClient<ILabRequest, LabRequest>(c =>
+            c.BaseAddress = new Uri(this.Configuration.GetSection("AppSettings")["Api"]));
 
             services.AddResponseCompression(options =>
             {
