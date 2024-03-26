@@ -1,6 +1,7 @@
 ﻿using ISIR.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using ISIR.JSON_CLASS;
 using System.Diagnostics;
 
 namespace ISIR.Controllers
@@ -9,6 +10,7 @@ namespace ISIR.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration Configuration;
+
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             _logger = logger;
@@ -23,13 +25,13 @@ namespace ISIR.Controllers
                 Users = HttpContext.Session.GetComplexData<UserDetails>("UserDetails");
 
                 if (Users == null)
-                    Users = new UserDetails();               
-                Users.Api = this.Configuration.GetSection("AppSettings")["Api"];
+                    Users = new UserDetails();
+                Users.Api = this.Configuration.GetSection("AppSettings")["Api"];  //not required
                 //Users.Chartfilelink = Convert.ToString(ConfigurationManager.AppSettings["Chartfilelink"]);
             }
             catch (Exception ex)
             {
-                ErrorLog.Log("Page Load Data " + ex.Message);
+                ErrorLog.WriteToLog("Page Load Data " + ex.Message);
             }
             return Json(Users);
         }
@@ -48,7 +50,7 @@ namespace ISIR.Controllers
         {
             //if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             //{
-                return View();
+            return View();
             //}
             //else
             //{
@@ -63,77 +65,92 @@ namespace ISIR.Controllers
             //{
             //    UserDetails Users = new UserDetails();
 
-            //    if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            //    //if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            //    if(true)
             //    {
-            //        string email = Convert.ToString(Request.QueryString["email"]);
-            //        string tokenval = Convert.ToString(Request.QueryString["token"]);
-            //        bool pagevalidate = CheckToken(tokenval);
+            //        string email = HttpContext.Request.Query["email"].ToString(); //test
+            //        string tokenval = HttpContext.Request.Query["token"].ToString();
+            //        //bool pagevalidate = CheckToken(tokenval);
+            //        bool pagevalidate = true;
             //        if (pagevalidate && email != null && email != "")
             //        {
-            //            WebServices _web = new WebServices();
-            //            //string token = GenerateToken();
             //            string token = tokenval;
-            //            Users = _web.GetUserDetails(email, token);
-            
+            //            //Users = _web.GetUserDetails(email, token); //user check
+
+            //            //test case User session
+            //            Users = new UserDetails()
+            //            {
+            //                Access = 1,
+            //                DeptName = "TA/QMI",
+            //                LabName = "1,2,3,4",
+            //                SubDeptName = "TA/QMI",
+            //                UserAccess = "1,2,3,4,5",
+            //                UserId = 118,
+            //                UserName = "S, Sathish kumar (575)",
+            //                UserType = "User"
+            //            };
+
             //            if (Convert.ToBoolean(Users.Access))
             //            {
             //                Users.token = token;
-            //                Users.language = Convert.ToString(Request.QueryString["ln"]);
-            //                Session["UserDetails"] = Users;
-            //                Session["UserName"] = Users.UserName;
-            //                Session["UserAccess"] = Users.UserAccess;
-            //                Session["LabNames"] = Users.LabName;
-            //                Session["UserType"] = Users.UserType;
+            //                Users.language = HttpContext.Request.Query["ln"].ToString();
+            //                HttpContext.Session.SetString("UserDetails", JsonConvert.SerializeObject(Users));
+            //                HttpContext.Session.SetString("UserName", Users.UserName);
+            //                HttpContext.Session.SetString("UserAccess", Users.UserAccess);
+            //                HttpContext.Session.SetString("LabNames", Users.LabName);
+            //                HttpContext.Session.SetString("UserType", Users.UserType);
             //            }
             //            else
             //            {
-            //                return Redirect(Convert.ToString(ConfigurationManager.AppSettings["Logout"]));
+            //                return Redirect(this.Configuration.GetSection("AppSettings")["Logout"].ToString());
             //            }
             //        }
             //        else
             //        {
-            //            return Redirect(Convert.ToString(ConfigurationManager.AppSettings["Logout"]));
+            //            return Redirect(this.Configuration.GetSection("AppSettings")["Logout"].ToString());
             //        }
             //    }
             //    else
             //    {
             //        try
             //        {
-            //            Users = (UserDetails)Session["UserDetails"];
+            //            Users = HttpContext.Session.GetComplexData<UserDetails>("UserDetails");
             //            if (Users == null)
             //                Users = new UserDetails();
 
             //            //Users.selectedplant = Convert.ToInt32(plantid);
-            //            Session["UserDetails"] = Users;//Update the UserDetails Session Here for Plant Master Dropdown Common Access
+            //            HttpContext.Session.SetComplexData("UserDetails", Users); //Update the UserDetails Session Here for Plant Master Dropdown Common Access
             //        }
             //        catch (Exception ex)
             //        {
-            //            ErrorLog.Log("LabTracker" + ex.Message);
+            //            ErrorLog.WriteToLog("LabTracker" + ex.Message);
             //        }
             //    }
             //}
             //catch (Exception ex)
             //{
-            //    ErrorLog.Log("LabTracker " + ex.Message);
-            //    return Redirect(Convert.ToString(ConfigurationManager.AppSettings["Logout"]));
+            //    ErrorLog.WriteToLog("LabTracker " + ex.Message);
+            //    return Redirect(this.Configuration.GetSection("AppSettings")["Logout"].ToString());
             //}
 
             return View();
         }
-
+        
         [HttpPost]
         //[SessionExpire]
         public ActionResult CreateRequestPost(CreateRequestLab CreateRequest)
-        { 
+        {
             return Json(false);
+            
         }
-
-        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 

@@ -1,7 +1,9 @@
 ﻿var globalx = 0;
 $(document).ready(function () {
     //other methods are omitted
-    InitializeUrl();
+    //CreateRequestDropDown();//test api
+    TestPostMethod(); //post method test
+    //InitializeUrl();
     //add validation
 
     if (window.File && window.FileList && window.FileReader) {
@@ -68,6 +70,21 @@ $(document).ready(function () {
     ClearData();
 });
 
+function TestPostMethod() {
+    var json = {
+        Id: 12,
+        Name : 'Smith',
+        NameJP : '012'
+    };
+
+    var ApiFunc = '../WorkflowJSON/PostData/';
+    var input = JSON.stringify(json);
+    PostMethod(ApiFunc, input, '', function (data) {
+
+        console.log('post check');
+        console.log(data);
+    });
+}
 var FileData = [];
 var JsonFileSize = [];
 function FileUpload(filedata, filename, filesize) {
@@ -128,7 +145,16 @@ function FileUpload(filedata, filename, filesize) {
     //    alertify.myAlert("File Size should be below 10 MB", 'Alert');
     //}
 }
+function CreateRequestDropDown() {
 
+    var api = "../WorkflowJSON/GetAllDropdownList?UserId=118"
+
+    GetMethod(api, '', function (data) {
+
+        console.log('get ddlval result');
+        console.log(data);
+    })
+}
 function InitializeUrl() {
 
 
